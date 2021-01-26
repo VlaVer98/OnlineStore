@@ -5,7 +5,7 @@ using Shop.Domain.Models.Identity;
 
 namespace Shop.Domain.Models.Entities
 {
-    class Order : BaseEntity<Guid>
+    public class Order : BaseEntity<Guid>
     {
         public OrderStatus Status { get; set; }
         public DateTime Created { get; set; }

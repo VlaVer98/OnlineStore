@@ -4,7 +4,7 @@ using System;
 
 namespace Shop.Domain.Models.Entities
 {
-    class UserProfile : BaseEntity<Guid>
+    public class UserProfile : BaseEntity<Guid>
     {
         public string Name { get; set; }
         public string Patronymic { get; set; }

@@ -3,7 +3,7 @@ using System;
 
 namespace Shop.Domain.Models.Identity
 {
-    class Role : IdentityRole<Guid>
+    public class Role : IdentityRole<Guid>
     {
     }
 }

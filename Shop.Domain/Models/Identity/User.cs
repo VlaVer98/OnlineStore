@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Shop.Domain.Models.Identity
 {
-    class User : IdentityUser<Guid>
+    public class User : IdentityUser<Guid>
     {
         //Navigation
         public UserProfile Profile { get; set; }

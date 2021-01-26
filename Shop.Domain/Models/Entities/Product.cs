@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Shop.Domain.Models.Entities
 {
-    class Product : BaseEntity<Guid>
+    public class Product : BaseEntity<Guid>
     {
         public string Title { get; set; }
         public string Content { get; set; }
