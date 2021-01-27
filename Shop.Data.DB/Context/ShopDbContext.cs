@@ -14,11 +14,14 @@ namespace Shop.Data.DB.Context
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
 
-        public ShopDbContext(DbContextOptions<ShopDbContext> options)
-            : base(options)
+        public ShopDbContext()
         {
+            Database.EnsureCreated();
         }
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Shopdb;Trusted_Connection=True;");
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

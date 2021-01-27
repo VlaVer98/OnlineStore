@@ -20,9 +20,9 @@ namespace Shop.Data.DB
         private ICategoryRepository _categoryRepository;
         private IOrderRepository _orderRepository;
 
-        public UnitOfWork(DbContextOptions<ShopDbContext> options)
+        public UnitOfWork()
         {
-            _dbContext = new ShopDbContext(options);
+            _dbContext = new ShopDbContext();
         }
 
         public DbContext DbContext
