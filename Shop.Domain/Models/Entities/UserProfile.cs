@@ -13,7 +13,7 @@ namespace Shop.Domain.Models.Entities
         public string Phone { get; set; }
 
         //Navigation
-        public Guid? UserId { get; set; }
+        public Guid UserId { get; set; }
         public User User { get; set; }
     }
 }
