@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Shop.Data.DB;
+using Shop.Domain;
 using Shop.Domain.Contracts.Services;
 using Shop.Logic.BLL.Services;
 using System;
@@ -26,6 +28,7 @@ namespace Shop.WEB
         public void ConfigureServices(IServiceCollection services)
         {
             //Service registration
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserProfileService, UserProfileService>();
             services.AddTransient<IRoleService, RoleService>();
