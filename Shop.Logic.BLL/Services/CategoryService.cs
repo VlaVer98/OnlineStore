@@ -1,0 +1,12 @@
+﻿using Shop.Domain;
+using Shop.Domain.Contracts.Services;
+using Shop.Logic.BLL.Services.Base;
+
+namespace Shop.Logic.BLL.Services
+{
+    public class CategoryService : BaseService, ICategoryService
+    {
+        public CategoryService(IUnitOfWork unitOfWork)
+            : base(unitOfWork) { }
+    }
+}
