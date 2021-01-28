@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shop.WEB.Models;
 using System;
+using System.Diagnostics;
 
 namespace Shop.WEB.Areas.Admin.Controllers.Base
 {
@@ -10,6 +12,12 @@ namespace Shop.WEB.Areas.Admin.Controllers.Base
         public BaseAdminController(IServiceProvider services)
         {
             _services = services;
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
