@@ -7,7 +7,7 @@ namespace Shop.Logic.BLL.Services
 {
     public class UserProfileService : BaseService, IUserProfileService
     {
-        public UserProfileService(IUnitOfWork unitOfWork, , IMapper mapper)
+        public UserProfileService(IUnitOfWork unitOfWork, IMapper mapper)
             : base(unitOfWork, mapper) { }
     }
 }
