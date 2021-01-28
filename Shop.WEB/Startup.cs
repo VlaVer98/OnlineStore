@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Shop.Common.AutoMapper;
 using Shop.Data.DB;
 using Shop.Domain;
 using Shop.Domain.Contracts.Services;
@@ -28,6 +29,7 @@ namespace Shop.WEB
         public void ConfigureServices(IServiceCollection services)
         {
             //Service registration
+            services.AddSingleton(AutoMapperConfig.Initialize());
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserProfileService, UserProfileService>();
