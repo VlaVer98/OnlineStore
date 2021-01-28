@@ -6,5 +6,6 @@ namespace Shop.Domain.Contracts.Repositories
 {
     public interface ICategoryRepository : IBaseRepository<Guid, Category>
     {
+        Category GetByTitle(string name);
     }
 }
