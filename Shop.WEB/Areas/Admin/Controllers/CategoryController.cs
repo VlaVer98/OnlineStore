@@ -79,5 +79,25 @@ namespace Shop.WEB.Areas.Admin.Controllers
 
             return View(categoryVM);
         }
+
+        [HttpGet]
+        [ActionName("Delete")]
+        public IActionResult ConfirmDelete(CategoryDeleteViewModel deleteVM)
+        {
+            return View(deleteVM);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(CategoryDeleteViewModel deleteVM)
+        {
+            ServiceResponse serviceResponse = _services.GetService<ICategoryService>().Delete(deleteVM.Id);
+            if (serviceResponse.IsSuccessful)
+            {
+                return RedirectToAction("index");
+            }
+
+            deleteVM.Message = serviceResponse.Message;
+            return View(deleteVM);
+        }
     }
 }

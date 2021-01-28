@@ -1,0 +1,17 @@
+﻿@model CategoryDeleteViewModel
+@{
+    ViewBag.Title = "Delete category";
+}
+
+<div>
+    <h2>Do you really want to delete category:</h2>
+
+    <div>
+        <form asp-action="Delete" method="post">
+            <div class="form-group">
+                <input type="submit" class="btn btn-success" value="Yes" />
+                <a asp-action="Index" type="button" class="btn btn-danger">No</a>
+            </div>
+        </form>
+    </div>
+</div>

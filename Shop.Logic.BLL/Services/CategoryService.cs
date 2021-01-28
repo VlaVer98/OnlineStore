@@ -80,6 +80,20 @@ namespace Shop.Logic.BLL.Services
             return new ServiceResponse(true, "Category successfully created");
         }
 
+        public ServiceResponse Delete(Guid id)
+        {
+            Category category = GetById(id);
+            if(category == null)
+            {
+                return new ServiceResponse(false, "Delete error, invalid category");
+            }
+
+            _unitOfWork.Categories.Delete(category);
+            _unitOfWork.Commit();
+
+            return new ServiceResponse(true, "Category successfully deleted");
+        }
+
         private Category GetById(Guid id)
         {
             return _unitOfWork.Categories.GetById(id);
