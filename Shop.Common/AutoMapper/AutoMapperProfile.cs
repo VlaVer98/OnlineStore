@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Shop.Domain.Models.Dtos.Category;
 using Shop.Domain.Models.Entities;
+using Shop.WEB.Models.ViewModels;
 
 namespace Shop.Common.AutoMapper
 {
@@ -13,6 +14,11 @@ namespace Shop.Common.AutoMapper
 
             //BLL -> DAL
             CreateMap<CategoryDto, Category>();
+
+            //BLL -> Presentation
+            CreateMap<CategoryDto, CategoryViewModel>();
+            
+
         }
     }
 }

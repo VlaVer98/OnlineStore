@@ -12,5 +12,11 @@ namespace Shop.Logic.BLL.Services
     {
         public CategoryService(IUnitOfWork unitOfWork, IMapper mapper)
             : base(unitOfWork, mapper) { }
+
+        public IEnumerable<CategoryDto> GetAll()
+        {
+            IEnumerable<Category> categories = _unitOfWork.Categories.GetAll();
+            return _mapper.Map<IEnumerable<CategoryDto>>(categories);
+        }
     }
 }
