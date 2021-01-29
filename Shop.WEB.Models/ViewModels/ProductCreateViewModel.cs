@@ -15,7 +15,6 @@ namespace Shop.WEB.Models.ViewModels
         [DataType(DataType.Currency)]
         [UIHint("Decimal")]
         public decimal Price { get; set; }
-        public string Image { get; set; }
         [Required]
         public ProductStatus Status { get; set; }
         [Required]

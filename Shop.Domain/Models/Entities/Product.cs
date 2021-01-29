@@ -11,11 +11,12 @@ namespace Shop.Domain.Models.Entities
         public string Title { get; set; }
         public string Content { get; set; }
         public decimal Price { get; set; }
-        public string Image { get; set; }
         public ProductStatus Status { get; set; }
 
         //Navigation
         public Guid? CategoryId { get; set; }
         public Category Category { get; set; }
+        public Guid? ImageId { get; set; }
+        public Image Image { get; set; }
     }
 }

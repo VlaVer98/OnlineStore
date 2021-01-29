@@ -63,7 +63,6 @@ namespace Shop.Logic.BLL.Services
                 Title = productDto.Title,
                 Content = productDto.Content,
                 Price = productDto.Price,
-                Image = productDto.Image,
                 Status = productDto.Status,
                 CategoryId = productDto.CategoryId
             };
@@ -131,7 +130,8 @@ namespace Shop.Logic.BLL.Services
         private List<Expression<Func<Product, object>>> GetAllIncludeProperties()
         {
             return new List<Expression<Func<Product, object>>> {
-                x => x.Category
+                x => x.Category,
+                x => x.Image
             };
         }  
     }
