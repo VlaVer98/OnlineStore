@@ -12,6 +12,7 @@ namespace Shop.Domain.Models.Dtos.Product
         public decimal Price { get; set; }
         public string Image { get; set; }
         public ProductStatus Status { get; set; }
+        public Guid? CategoryId { get; set; }
         public CategoryDto Category { get; set; }
     }
 }
