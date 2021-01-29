@@ -19,8 +19,9 @@ namespace Shop.Common.AutoMapper
 
             //BLL -> Presentation
             CreateMap<CategoryDto, CategoryViewModel>();
-            CreateMap<ProductDto, ProductViewModel>();
             CreateMap<CategoryDto, СategoryTitleAndIdViewModel>();
+            CreateMap<ProductDto, ProductViewModel>();
+            CreateMap<ProductDto, ProductCreateViewModel>();
 
             //Presentation -> BLL
             CreateMap<CategoryViewModel, CategoryDto>();

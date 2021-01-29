@@ -23,6 +23,12 @@ namespace Shop.Logic.BLL.Services
             return productsDto;
         }
 
+        public ProductDto Get(Guid id)
+        {
+            Product product = _unitOfWork.Products.GetById(id);
+            return _mapper.Map<ProductDto>(product);
+        }
+
         public ServiceResponse Create(ProductDto productDto)
         {
             if(productDto == null)
@@ -60,6 +66,46 @@ namespace Shop.Logic.BLL.Services
             _unitOfWork.Commit();
 
             return new ServiceResponse(true, "Product successfully created");
+        }
+
+        public ServiceResponse Update(ProductDto productDto)
+        {
+            if (productDto == null)
+            {
+                return new ServiceResponse(true, "Invalid product");
+            }
+
+            if (productDto.Title == null)
+            {
+                return new ServiceResponse(false, "Title not set");
+            }
+
+            if (productDto.CategoryId != null)
+            {
+
+                Category category = _unitOfWork.Categories.GetById((Guid)productDto.CategoryId);
+                if (category == null)
+                {
+                    return new ServiceResponse(false, "Invalid category");
+                }
+            }
+
+            Product product = _unitOfWork.Products.GetById(productDto.Id);
+            if(product == null)
+            {
+                return new ServiceResponse(false, "Invalid product id");
+            }
+
+            product.Title = productDto.Title;
+            product.Content = productDto.Content;
+            product.Price = productDto.Price;
+            product.Status = productDto.Status;
+            product.CategoryId = productDto.CategoryId;
+
+            _unitOfWork.Products.Update(product);
+            _unitOfWork.Commit();
+
+            return new ServiceResponse(true, "Product successfully updated");
         }
 
         private List<Expression<Func<Product, object>>> GetAllIncludeProperties()

@@ -55,6 +55,39 @@ namespace Shop.WEB.Areas.Admin.Controllers
             return View(productCreateVM);
         }
 
+        public IActionResult Edit(Guid id)
+        {
+            ProductDto productDto = _services.GetService<IProductService>().Get(id);
+            if(productDto == null)
+            {
+                return BadRequest();
+            }
+
+            ProductCreateViewModel productCreateVM = _services.GetService<IMapper>()
+                .Map<ProductCreateViewModel>(productDto);
+            productCreateVM.AllCategory = GetAllCategory();
+
+            return View(productCreateVM);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ProductCreateViewModel productCreateVM)
+        {
+            if (ModelState.IsValid)
+            {
+                ProductDto productDto = _services.GetService<IMapper>().Map<ProductDto>(productCreateVM);
+                ServiceResponse serviceResponse = _services.GetService<IProductService>().Update(productDto);
+
+                if (!serviceResponse.IsSuccessful)
+                {
+                    ModelState.AddModelError("", serviceResponse.Message);
+                }
+            }
+
+            productCreateVM.AllCategory = GetAllCategory();
+            return View(productCreateVM);
+        }
+
         private List<СategoryTitleAndIdViewModel> GetAllCategory()
         {
             IEnumerable<CategoryDto> categoriesDto = _services.GetService<ICategoryService>().GetAll();

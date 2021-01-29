@@ -1,11 +1,12 @@
 ﻿using Shop.Domain.enums;
+using Shop.WEB.Models.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Shop.WEB.Models.ViewModels
 {
-    public class ProductCreateViewModel
+    public class ProductCreateViewModel : BaseViewModel<Guid>
     {
         [Required]
         public string Title { get; set; }
