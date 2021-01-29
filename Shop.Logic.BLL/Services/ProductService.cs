@@ -23,9 +23,15 @@ namespace Shop.Logic.BLL.Services
             return productsDto;
         }
 
-        public ProductDto Get(Guid id)
+        public ProductDto Get(Guid id, bool withAllInclude = false)
         {
-            Product product = _unitOfWork.Products.GetById(id);
+            Product product;
+
+            if (withAllInclude)
+                product = _unitOfWork.Products.GetById(id, GetAllIncludeProperties());
+            else
+                product = _unitOfWork.Products.GetById(id);
+
             return _mapper.Map<ProductDto>(product);
         }
 

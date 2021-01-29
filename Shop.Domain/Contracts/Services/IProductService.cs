@@ -9,7 +9,7 @@ namespace Shop.Domain.Contracts.Services
     public interface IProductService : IService
     {
         public IEnumerable<ProductDto> GetAll();
-        public ProductDto Get(Guid id);
+        public ProductDto Get(Guid id, bool withAllInclude = false);
         public ServiceResponse Create(ProductDto productDto);
         public ServiceResponse Update(ProductDto productDto);
         public ServiceResponse Delete(Guid id);
