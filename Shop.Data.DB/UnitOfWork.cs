@@ -19,6 +19,7 @@ namespace Shop.Data.DB
         private IProductRepository _productRepository;
         private ICategoryRepository _categoryRepository;
         private IOrderRepository _orderRepository;
+        private IImageRepository _imageRepository;
 
         public UnitOfWork()
         {
@@ -61,6 +62,10 @@ namespace Shop.Data.DB
         public IOrderRepository Orders
         {
             get { return _orderRepository ?? (_orderRepository = new OrderRepository(_dbContext)); }
+        }
+        public IImageRepository Images
+        {
+            get { return _imageRepository ?? (_imageRepository = new ImageRepository(_dbContext)); }
         }
 
         public void Commit()
