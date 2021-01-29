@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ProductViewModel>
+@{
+    ViewData["Title"] = "Products";
+}
+<div class="row">
+    <div class="col-md">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Title</td>
+                    <td>Category</td>
+                    <td>Price</td>
+                    <td>Status</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.Category.Title</td>
+                        <td>@item.Price</td>
+                        <td>@item.Status</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id" type="button" class="btn btn-info btn-sm mr-1">Details</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" type="button" class="btn btn-success btn-sm mr-1">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" type="button" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

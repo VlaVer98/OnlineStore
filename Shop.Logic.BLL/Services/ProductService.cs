@@ -1,7 +1,12 @@
 ﻿using AutoMapper;
 using Shop.Domain;
 using Shop.Domain.Contracts.Services;
+using Shop.Domain.Models.Dtos.Product;
+using Shop.Domain.Models.Entities;
 using Shop.Logic.BLL.Services.Base;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Shop.Logic.BLL.Services
 {
@@ -9,5 +14,19 @@ namespace Shop.Logic.BLL.Services
     {
         public ProductService(IUnitOfWork unitOfWork, IMapper mapper)
             : base(unitOfWork, mapper) { }
+
+        public IEnumerable<ProductDto> GetAll()
+        {
+            IEnumerable<Product> products = _unitOfWork.Products.GetAll(GetAllIncludeProperties());
+            IEnumerable<ProductDto> productsDto = _mapper.Map<IEnumerable<ProductDto>>(products);
+            return productsDto;
+        }
+
+        private List<Expression<Func<Product, object>>> GetAllIncludeProperties()
+        {
+            return new List<Expression<Func<Product, object>>> {
+                x => x.Category
+            };
+        }  
     }
 }
