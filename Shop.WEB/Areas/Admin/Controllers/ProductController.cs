@@ -88,6 +88,25 @@ namespace Shop.WEB.Areas.Admin.Controllers
             return View(productCreateVM);
         }
 
+        [ActionName("Delete")]
+        public IActionResult ConfirmDelete(ServiceResponseViewModel serviceResponseVM)
+        {
+            return View(serviceResponseVM);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(ServiceResponseViewModel serviceResponseVM)
+        {
+            ServiceResponse serviceResponse = _services.GetService<IProductService>().Delete(serviceResponseVM.Id);
+            if (serviceResponse.IsSuccessful == false)
+            {
+                serviceResponseVM.Message = serviceResponse.Message;
+                return View(serviceResponseVM);
+            }
+
+            return RedirectToAction("Index");
+        }
+
         private List<СategoryTitleAndIdViewModel> GetAllCategory()
         {
             IEnumerable<CategoryDto> categoriesDto = _services.GetService<ICategoryService>().GetAll();

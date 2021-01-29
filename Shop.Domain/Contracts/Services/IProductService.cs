@@ -12,5 +12,6 @@ namespace Shop.Domain.Contracts.Services
         public ProductDto Get(Guid id);
         public ServiceResponse Create(ProductDto productDto);
         public ServiceResponse Update(ProductDto productDto);
+        public ServiceResponse Delete(Guid id);
     }
 }

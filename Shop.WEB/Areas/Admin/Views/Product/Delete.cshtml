@@ -1,0 +1,22 @@
+﻿@model ServiceResponseViewModel
+@{
+    ViewBag.Title = "Delete product";
+}
+
+<div>
+    <h2>Do you really want to delete product:</h2>
+    @if(Model.Message != null)
+    {
+        <div>
+            <h5>@Model.Message</h5>
+        </div>
+    }
+    <div>
+        <form asp-action="Delete" method="post">
+            <div class="form-group">
+                <input type="submit" class="btn btn-success" value="Yes" />
+                <a asp-action="Index" type="button" class="btn btn-danger">No</a>
+            </div>
+        </form>
+    </div>
+</div>

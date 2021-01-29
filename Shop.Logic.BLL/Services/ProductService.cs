@@ -108,6 +108,20 @@ namespace Shop.Logic.BLL.Services
             return new ServiceResponse(true, "Product successfully updated");
         }
 
+        public ServiceResponse Delete(Guid id)
+        {
+            Product product = _unitOfWork.Products.GetById(id);
+            if(product == null)
+            {
+                return new ServiceResponse(false, "Error delete. Invalid product id");
+            }
+
+            _unitOfWork.Products.Delete(product);
+            _unitOfWork.Commit();
+
+            return new ServiceResponse(true, "Product successfully delete");
+        }
+
         private List<Expression<Func<Product, object>>> GetAllIncludeProperties()
         {
             return new List<Expression<Func<Product, object>>> {
