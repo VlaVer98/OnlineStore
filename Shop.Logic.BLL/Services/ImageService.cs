@@ -60,6 +60,11 @@ namespace Shop.Logic.BLL.Services
                 return new ServiceResponse(false, "Product with this ID does not exist");
             }
 
+            if(product.ImageId != null)
+            {
+                _unitOfWork.Images.Delete(product.Id);
+            }
+
             product.ImageId = image.Id;
             _unitOfWork.Products.Update(product);
 
