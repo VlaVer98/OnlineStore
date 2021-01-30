@@ -10,6 +10,7 @@ using Shop.Domain.Models.Entities;
 using Shop.Logic.BLL.Services.Base;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Shop.Logic.BLL.Services
@@ -25,6 +26,16 @@ namespace Shop.Logic.BLL.Services
                 .Include(x => x.User).ThenInclude(x => x.Profile);
 
             return _mapper.Map<IEnumerable<OrderDto>>(orders);
+        }
+
+        public OrderDto GetWithAllRelations(Guid id)
+        {
+            Order order = _unitOfWork.Orders.Get()
+                .Include(x => x.User).ThenInclude(x => x.Profile)
+                .Include(x => x.Products).ThenInclude(x => x.Product)
+                .FirstOrDefault(x => x.Id == id);
+
+            return _mapper.Map<OrderDto>(order);
         }
 
         public ServiceResponse ChangeStatus(Guid orderId, OrderStatus orderStatus)

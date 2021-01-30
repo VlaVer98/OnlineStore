@@ -1,0 +1,41 @@
+﻿@model OrderViewModel
+@{
+    ViewBag.Title = "Order";
+}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Details:</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <h3>Information about order:</h3>
+        <p><b>Id Order:</b> @Model.Id</p>
+        <p><b>Status:</b> @Model.Status</p>
+        <p><b>Creating a order:</b> @Model.Created</p>
+        <p><b>Updating a order:</b> @Model.Updated</p>
+
+        <h3>Information about buyer:</h3>
+        <p><b>Id user:</b> @Model.User.Id</p>
+        <p><b>Full name:</b> @Model.User.Lastname @Model.User.Name @Model.User.Patronymic</p>
+        <p><b>Email:</b> @Model.User.Email</p>
+        <p><b>Phone:</b> @Model.User.PhoneNumber</p>
+        <p><b>Address:</b> @Model.User.Address</p>
+
+        <h3>Purchased items:</h3>
+        @foreach (var item in Model.Products)
+        {
+            <p><b>Id product:</b> @item.Product.Id</p>
+            <p><b>Name:</b> @item.Product.Title</p>
+            <p><b>Price Purchase:</b> @item.PricePurchase; <b>Price now on this product:</b> @item.Product.Price</p>
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <a asp-action="UploadImage" asp-route-id="@Model.Id" type="button" class="btn btn-info">Add image</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" type="button" class="btn btn-success">Edit task</a>
+        <a asp-action="Delete"  asp-route-id="@Model.Id" type="button" class="btn btn-danger">Delete</a>
+    </div>
+</div>

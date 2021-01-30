@@ -45,5 +45,14 @@ namespace Shop.WEB.Areas.Admin.Controllers
 
             return View(changingStatus);
         }
+
+        public IActionResult Details(Guid id)
+        {
+            OrderDto orderDto = _services.GetService<IOrderService>().GetWithAllRelations(id);
+            OrderViewModel orderVM = _services.GetService<IMapper>()
+                .Map<OrderViewModel>(orderDto);
+
+            return View(orderVM);
+        }
     }
 }
