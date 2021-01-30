@@ -4,7 +4,6 @@ using Shop.Domain.Models.Dtos.Image;
 using Shop.Domain.Models.Dtos.Order;
 using Shop.Domain.Models.Dtos.Product;
 using Shop.Domain.Models.Entities;
-using Shop.Domain.Models.Identity;
 using Shop.Logic.BLL.Models;
 using Shop.WEB.Models.ViewModels;
 
@@ -18,6 +17,7 @@ namespace Shop.Common.AutoMapper
             CreateMap<Category, CategoryDto>();
             CreateMap<Product, ProductDto>();
             CreateMap<Image, ImageDto>();
+            CreateMap<OrderProduct, OrderProductDto>();
             CreateMap<Order, OrderDto>()
                 .ForMember(x => x.User, opt => opt.MapFrom(y => y.User))
                 .ForMember(x => x.User, opt => opt.MapFrom(y => y.User.Profile));

@@ -16,6 +16,7 @@ namespace Shop.Data.DB.Context
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Image> images { get; set; }
+        public DbSet<OrderProduct> orderProducts { get; set; }
 
         public ShopDbContext()
         {
@@ -40,6 +41,7 @@ namespace Shop.Data.DB.Context
             modelBuilder.ApplyConfiguration(new CategoryMap());
             modelBuilder.ApplyConfiguration(new OrderMap());
             modelBuilder.ApplyConfiguration(new ImageMap());
+            modelBuilder.ApplyConfiguration(new OrderProductMap());
         }
     }
 }

@@ -2,6 +2,7 @@
 using Shop.Domain.Enums;
 using System;
 using Shop.Domain.Models.Identity;
+using System.Collections.Generic;
 
 namespace Shop.Domain.Models.Entities
 {
@@ -10,11 +11,10 @@ namespace Shop.Domain.Models.Entities
         public OrderStatus Status { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
-        public decimal PriceProduct { get; set; }
+        public decimal Amount { get; set; }
 
         //Navigation
-        public Guid? ProductId { get; set; }
-        public Product Product { get; set; }
+        public ICollection<OrderProduct> Products { get; set; }
         public Guid? UserId { get; set; }
         public User User { get; set; }
     }

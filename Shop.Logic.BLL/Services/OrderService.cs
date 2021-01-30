@@ -29,7 +29,7 @@ namespace Shop.Logic.BLL.Services
         {
             return new List<Expression<Func<Order, object>>> {
                 x => x.User,
-                x => x.Product
+                x => x.Products
             };
         }
     }
