@@ -17,6 +17,7 @@ namespace Shop.Domain
         IProductRepository Products { get; }
         ICategoryRepository Categories { get; }
         IOrderRepository Orders { get; }
+        IImageRepository Images { get; }
 
         void DisableAutoDetectChanges();
         //void EnableLazyLoading();

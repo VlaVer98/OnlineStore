@@ -3,6 +3,7 @@ using Shop.Domain.Models.Dtos.Category;
 using Shop.Domain.Models.Dtos.Image;
 using Shop.Domain.Models.Dtos.Product;
 using Shop.Domain.Models.Entities;
+using Shop.Logic.BLL.Models;
 using Shop.WEB.Models.ViewModels;
 
 namespace Shop.Common.AutoMapper
@@ -19,6 +20,7 @@ namespace Shop.Common.AutoMapper
             //BLL -> DAL
             CreateMap<CategoryDto, Category>();
             CreateMap<ImageDto, Image>();
+            CreateMap<UploadingImageToProductDto, UploadingImageToProductModel>();
 
             //BLL -> Presentation
             CreateMap<CategoryDto, CategoryViewModel>();
