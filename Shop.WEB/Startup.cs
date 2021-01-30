@@ -37,6 +37,7 @@ namespace Shop.WEB
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IImageService, ImageService>();
 
             services.AddControllersWithViews();
         }

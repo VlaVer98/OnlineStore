@@ -9,6 +9,7 @@ using Shop.WEB.Models.ViewModels;
 using AutoMapper;
 using Shop.Domain.Models.Dtos.Category;
 using Shop.Domain.Contracts.Services.Response;
+using Microsoft.AspNetCore.Http;
 
 namespace Shop.WEB.Areas.Admin.Controllers
 {
@@ -98,6 +99,35 @@ namespace Shop.WEB.Areas.Admin.Controllers
 
             productCreateVM.AllCategory = GetAllCategory();
             return View(productCreateVM);
+        }
+
+        public IActionResult UploadImage(Guid id, string message)
+        {
+            var uploadingImage = new UploadingImageToProductViewModel {
+                Id = id,
+                Message = message
+            };
+            return View(uploadingImage);
+        }
+
+        [HttpPost]
+        public IActionResult UploadImage(UploadingImageToProductViewModel uploadingImageVM)
+        {
+            if (ModelState.IsValid)
+            {
+                UploadingImageToProductDto uploadingImageDto = _services.GetService<IMapper>()
+                    .Map<UploadingImageToProductDto>(uploadingImageVM);
+                ServiceResponse serviceResponse = _services.GetService<IImageService>().Upload(uploadingImageDto);
+
+                if (serviceResponse.IsSuccessful)
+                {
+                    return RedirectToAction("Details", new { Id = uploadingImageVM.Id });
+                }
+
+                ModelState.AddModelError("", serviceResponse.Message);
+            }
+
+            return View(uploadingImageVM);
         }
 
         [ActionName("Delete")]

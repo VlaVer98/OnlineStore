@@ -27,11 +27,18 @@ namespace Shop.Common.AutoMapper
             CreateMap<CategoryDto, СategoryTitleAndIdViewModel>();
             CreateMap<ProductDto, ProductViewModel>();
             CreateMap<ProductDto, ProductCreateViewModel>();
+            CreateMap<ImageDto, ImageViewModel>();
 
             //Presentation -> BLL
             CreateMap<CategoryViewModel, CategoryDto>();
             CreateMap<СategoryTitleAndIdViewModel, CategoryDto>();
             CreateMap<ProductCreateViewModel, ProductDto>();
+            CreateMap<UploadingImageToProductViewModel, UploadingImageToProductDto>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(y => y.Id))
+                .ForMember(x => x.NameImage, opt => opt.MapFrom(y => y.NameImage))
+                .ForMember(x => x.Stream, opt => opt.MapFrom(y => y.FormFile.OpenReadStream()))
+                .ForMember(x => x.LengthImage, opt => opt.MapFrom(y => y.FormFile.Length))
+                .ForMember(x => x.TypeImage, opt => opt.MapFrom(y => y.FormFile.ContentType));
         }
     }
 }

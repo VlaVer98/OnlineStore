@@ -13,5 +13,6 @@ namespace Shop.WEB.Models.ViewModels
         public decimal Price { get; set; }
         public ProductStatus Status { get; set; }
         public CategoryViewModel Category { get; set; }
+        public ImageViewModel Image { get; set; }
     }
 }

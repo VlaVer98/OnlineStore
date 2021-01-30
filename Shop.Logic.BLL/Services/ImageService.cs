@@ -65,7 +65,7 @@ namespace Shop.Logic.BLL.Services
 
             _unitOfWork.Commit();
 
-            return new ServiceResponse(false, "Image saved successfully");
+            return new ServiceResponse(true, "Image saved successfully");
         }
     }
 }
