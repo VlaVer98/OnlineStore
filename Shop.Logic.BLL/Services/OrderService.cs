@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Shop.Domain;
 using Shop.Domain.Contracts.Services;
+using Shop.Domain.Contracts.Services.Response;
+using Shop.Domain.Enums;
 using Shop.Domain.Models;
 using Shop.Domain.Models.Dtos.Order;
 using Shop.Domain.Models.Entities;
@@ -23,6 +25,21 @@ namespace Shop.Logic.BLL.Services
                 .Include(x => x.User).ThenInclude(x => x.Profile);
 
             return _mapper.Map<IEnumerable<OrderDto>>(orders);
+        }
+
+        public ServiceResponse ChangeStatus(Guid orderId, OrderStatus orderStatus)
+        {
+            Order order = _unitOfWork.Orders.GetById(orderId);
+            if(order == null)
+            {
+                return new ServiceResponse(false, $"Order with Id{orderId} does not exist");
+            }
+
+            order.Status = orderStatus;
+            _unitOfWork.Orders.Update(order);
+
+            _unitOfWork.Commit();
+            return new ServiceResponse(true, "Order status is successful change");
         }
 
         private List<Expression<Func<Order, object>>> GetAllIncludeProperties()

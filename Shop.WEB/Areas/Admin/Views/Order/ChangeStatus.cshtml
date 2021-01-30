@@ -1,0 +1,27 @@
+﻿@model ChangingStatusOrderViewModel
+@{
+    ViewBag.Title = "Сhange a status order";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Сhange a status order:</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-antiforgery="true" asp-action="ChangeStatus">
+            <div class="form-group">
+                <div class="validation" asp-validation-summary="All"></div>
+            </div>
+
+            <div class="form-group">
+                <select class="form-control" asp-for="@Model.OrderStatus" asp-items="@Html.GetEnumSelectList<OrderStatus>()"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Change" />
+            </div>
+        </form>
+    </div>
+</div>
