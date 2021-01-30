@@ -1,0 +1,40 @@
+﻿@model IEnumerable<OrderViewModel>
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="row mt-1">
+    <div class="col-md">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Status</td>
+                    <td>Price product</td>
+                    <td>Product Name</td>
+                    <td>Data Created</td>
+                    <td>Data Updated</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Status</td>
+                        <td>@item.PriceProduct</td>
+                        <td>@item.Product.Title</td>
+                        <td>@item.Created</td>
+                        <td>@item.Updated</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id" type="button" class="btn btn-info btn-sm mr-1">Details</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" type="button" class="btn btn-success btn-sm mr-1">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" type="button" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
