@@ -25,14 +25,13 @@ namespace Shop.Logic.BLL.Services
             _userManager = userManager;
         }
 
-        public ServiceResponse<List<string>> CreateBuyer(BuyerRegistrationDto buyerRegistrationDto)
+        public ServiceResponse<User> CreateBuyer(BuyerRegistrationDto buyerRegistrationDto)
         {
             List<string> errors = new List<string>();
 
             if (buyerRegistrationDto == null)
             {
-                errors.Add("Data is invalid");
-                return new ServiceResponse<List<string>>(false, "Error", errors);
+                return new ServiceResponse<User>(false, "Data is invalid", null);
             }
             BuyerRegistrationModel buyerRegistrationModel = _mapper
                 .Map<BuyerRegistrationModel>(buyerRegistrationDto);
@@ -70,10 +69,10 @@ namespace Shop.Logic.BLL.Services
                 {
                     errors.Add(error.Description);
                 }
-                return new ServiceResponse<List<string>>(false, "Error", errors);
+                return new ServiceResponse<User>(false, errors, null);
             }
 
-            return new ServiceResponse<List<string>>(true, "Successfull", errors);
+            return new ServiceResponse<User>(true, "Successful registration", user);
         }
     }
 }

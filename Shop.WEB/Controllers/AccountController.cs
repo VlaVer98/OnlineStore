@@ -34,14 +34,17 @@ namespace Shop.WEB.Controllers
             {
                 BuyerRegistrationDto buyerRegistrationDto = _services.GetService<IMapper>()
                     .Map<BuyerRegistrationDto>(buyerRegistrationVM);
-                ServiceResponse<List<string>> serviceResponse = _services.GetService<IAccountService>()
+                ServiceResponse<User> serviceResponse = _services.GetService<IAccountService>()
                     .CreateBuyer(buyerRegistrationDto);
+
                 if (serviceResponse.IsSuccessful)
                 {
+                    await _services.GetService<SignInManager<User>>()
+                        .SignInAsync(serviceResponse.ResponseObject, false);
                     return Redirect("/home/index");
                 }
 
-                foreach (var item in serviceResponse.ResponseObject)
+                foreach (var item in serviceResponse.AllMessages)
                 {
                     ModelState.AddModelError("", item);
                 }

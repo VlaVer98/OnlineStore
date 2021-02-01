@@ -1,12 +1,12 @@
 ﻿using Shop.Domain.Contracts.Services.Base;
 using Shop.Domain.Contracts.Services.Response;
 using Shop.Domain.Models.Dtos.Account;
-using System.Collections.Generic;
+using Shop.Domain.Models.Identity;
 
 namespace Shop.Domain.Contracts.Services
 {
     public interface IAccountService : IService
     {
-        public ServiceResponse<List<string>> CreateBuyer(BuyerRegistrationDto buyerRegistrationDto);
+        public ServiceResponse<User> CreateBuyer(BuyerRegistrationDto buyerRegistrationDto);
     }
 }
