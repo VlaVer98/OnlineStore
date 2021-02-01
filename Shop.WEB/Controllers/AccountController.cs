@@ -14,11 +14,11 @@ using System.Threading.Tasks;
 
 namespace Shop.WEB.Controllers
 {
-    public class RegistrationController : Controller
+    public class AccountController : Controller
     {
         private readonly IServiceProvider _services;
 
-        public RegistrationController(IServiceProvider services)
+        public AccountController(IServiceProvider services)
         {
             _services = services;
         }
