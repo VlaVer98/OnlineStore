@@ -54,6 +54,20 @@ namespace Shop.Logic.BLL.Services
             return new ServiceResponse(true, "Order status is successful change");
         }
 
+        public ServiceResponse Delete(Guid id)
+        {
+            Order order = _unitOfWork.Orders.GetById(id);
+            if(order == null)
+            {
+                return new ServiceResponse(false, $"Order with Id {id} does not exist");
+            }
+
+            _unitOfWork.Orders.Delete(order);
+            _unitOfWork.Commit();
+
+            return new ServiceResponse(true, "Order is successful delete");
+        }
+
         private List<Expression<Func<Order, object>>> GetAllIncludeProperties()
         {
             return new List<Expression<Func<Order, object>>> {

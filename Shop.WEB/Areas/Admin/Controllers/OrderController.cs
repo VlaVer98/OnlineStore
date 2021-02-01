@@ -46,6 +46,28 @@ namespace Shop.WEB.Areas.Admin.Controllers
             return View(changingStatus);
         }
 
+        [ActionName("Delete")]
+        public IActionResult ConfirmDelete(Guid id)
+        {
+            return View(new ServiceResponseViewModel { Id = id });
+        }
+
+        [HttpPost]
+        public IActionResult Delete(ServiceResponseViewModel serviceResponseVM)
+        {
+            if (ModelState.IsValid)
+            {
+                ServiceResponse serviceResponse = _services.GetService<IOrderService>()
+                    .Delete(serviceResponseVM.Id);
+                if (serviceResponse.IsSuccessful)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError("", serviceResponse.Message);
+            }
+            return View(serviceResponseVM);
+        }
+
         public IActionResult Details(Guid id)
         {
             OrderDto orderDto = _services.GetService<IOrderService>().GetWithAllRelations(id);

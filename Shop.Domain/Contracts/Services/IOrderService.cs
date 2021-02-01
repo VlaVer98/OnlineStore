@@ -12,5 +12,6 @@ namespace Shop.Domain.Contracts.Services
         public IEnumerable<OrderDto> GetAll();
         public ServiceResponse ChangeStatus(Guid orderId, OrderStatus orderStatus);
         public OrderDto GetWithAllRelations(Guid id);
+        public ServiceResponse Delete(Guid id);
     }
 }
