@@ -1,0 +1,59 @@
+﻿@model BuyerRegistrationViewModel
+@{
+    ViewBag.Title = "Registration";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Registration:</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-antiforgery="true" asp-action="Create">
+            <div class="form-group">
+                <div class="validation" asp-validation-summary="All"></div>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.UserName">Nickname</label><br />
+                <input class="form-control" asp-for="@Model.UserName" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Email"></label><br />
+                <input class="form-control" asp-for="@Model.Email" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Lastname"></label><br />
+                <input type="text" class="form-control" asp-for="@Model.Lastname" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Name"></label><br />
+                <input class="form-control" asp-for="@Model.Name" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Patronymic"></label><br />
+                <input class="form-control" asp-for="@Model.Patronymic" />
+            </div>
+            <div class=" form-group">
+                <label asp-for="@Model.Address"></label><br />
+                <input class="form-control" asp-for="@Model.Address" />
+            </div>
+            <div class=" form-group">
+                <label asp-for="@Model.PhoneNumber">Phone</label><br />
+                <input class="form-control" asp-for="@Model.PhoneNumber" />
+            </div>
+            <div class=" form-group">
+                <label asp-for="@Model.Password"></label><br />
+                <input class="form-control" asp-for="@Model.Password" />
+            </div>
+            <div class=" form-group">
+                <label asp-for="@Model.PasswordConfirm">Password Confirm</label><br />
+                <input class="form-control" asp-for="@Model.PasswordConfirm" />
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Create" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Shop.Domain.Models.Dtos.Account;
 using Shop.Domain.Models.Dtos.Category;
 using Shop.Domain.Models.Dtos.Image;
 using Shop.Domain.Models.Dtos.Order;
@@ -31,7 +32,7 @@ namespace Shop.Common.AutoMapper
             CreateMap<ImageDto, Image>();
             CreateMap<UploadingImageToProductDto, UploadingImageToProductModel>();
 
-            //BLL -> Presentation
+            //DTO -> Presentation
             CreateMap<CategoryDto, CategoryViewModel>();
             CreateMap<CategoryDto, СategoryTitleAndIdViewModel>();
             CreateMap<ProductDto, ProductViewModel>();
@@ -40,17 +41,23 @@ namespace Shop.Common.AutoMapper
             CreateMap<UserOrderDto, UserOrderViewModel>();
             CreateMap<OrderProductDto, OrderProductViewModel>();
             CreateMap<OrderDto, OrderViewModel>();
+            CreateMap<BuyerRegistrationDto, BuyerRegistrationModel>();
 
             //Presentation -> BLL
             CreateMap<CategoryViewModel, CategoryDto>();
             CreateMap<СategoryTitleAndIdViewModel, CategoryDto>();
             CreateMap<ProductCreateViewModel, ProductDto>();
+            CreateMap<BuyerRegistrationViewModel, BuyerRegistrationDto>();
             CreateMap<UploadingImageToProductViewModel, UploadingImageToProductDto>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(y => y.Id))
                 .ForMember(x => x.NameImage, opt => opt.MapFrom(y => y.NameImage))
                 .ForMember(x => x.Stream, opt => opt.MapFrom(y => y.FormFile.OpenReadStream()))
                 .ForMember(x => x.LengthImage, opt => opt.MapFrom(y => y.FormFile.Length))
                 .ForMember(x => x.TypeImage, opt => opt.MapFrom(y => y.FormFile.ContentType));
+
+            //Model -> Model
+            CreateMap<BuyerRegistrationModel, User>();
+            CreateMap<BuyerRegistrationModel, UserProfile>();
         }
     }
 }

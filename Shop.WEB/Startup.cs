@@ -10,6 +10,7 @@ using Shop.Data.DB;
 using Shop.Data.DB.Context;
 using Shop.Domain;
 using Shop.Domain.Contracts.Services;
+using Shop.Domain.Models.Identity;
 using Shop.Logic.BLL.Services;
 using System;
 using System.Collections.Generic;
@@ -36,9 +37,12 @@ namespace Shop.WEB
                 options.UseSqlServer(
                     connection,
                     x => x.MigrationsAssembly("Shop.Data.DB")));
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<ShopDbContext>();
 
             services.AddSingleton(AutoMapperConfig.Initialize());
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserProfileService, UserProfileService>();
             services.AddTransient<IRoleService, RoleService>();
@@ -68,6 +72,7 @@ namespace Shop.WEB
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
