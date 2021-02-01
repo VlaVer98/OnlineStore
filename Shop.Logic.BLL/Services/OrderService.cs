@@ -47,6 +47,7 @@ namespace Shop.Logic.BLL.Services
             }
 
             order.Status = orderStatus;
+            order.Updated = DateTime.Now;
             _unitOfWork.Orders.Update(order);
 
             _unitOfWork.Commit();
