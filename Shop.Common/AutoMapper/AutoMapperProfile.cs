@@ -38,6 +38,7 @@ namespace Shop.Common.AutoMapper
             CreateMap<ProductDto, ProductCreateViewModel>();
             CreateMap<ImageDto, ImageViewModel>();
             CreateMap<UserOrderDto, UserOrderViewModel>();
+            CreateMap<OrderProductDto, OrderProductViewModel>();
             CreateMap<OrderDto, OrderViewModel>();
 
             //Presentation -> BLL
