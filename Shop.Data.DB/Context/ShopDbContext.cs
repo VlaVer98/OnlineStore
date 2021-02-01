@@ -18,20 +18,9 @@ namespace Shop.Data.DB.Context
         public DbSet<Image> images { get; set; }
         public DbSet<OrderProduct> orderProducts { get; set; }
 
-        public ShopDbContext()
-        {
-            //Database.EnsureCreated();
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            var builder = new ConfigurationBuilder();
-            builder.SetBasePath(Directory.GetCurrentDirectory());
-            builder.AddJsonFile("appsettings.json");
-            var config = builder.Build();
-            string connectionString = config.GetConnectionString("DefaultConnection");
+        public ShopDbContext(DbContextOptions<ShopDbContext> options)
+            : base (options) {}
 
-            optionsBuilder.UseSqlServer(connectionString);
-        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

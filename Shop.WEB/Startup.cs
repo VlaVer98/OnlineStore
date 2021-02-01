@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shop.Common.AutoMapper;
 using Shop.Data.DB;
+using Shop.Data.DB.Context;
 using Shop.Domain;
 using Shop.Domain.Contracts.Services;
 using Shop.Logic.BLL.Services;
@@ -29,6 +31,12 @@ namespace Shop.WEB
         public void ConfigureServices(IServiceCollection services)
         {
             //Service registration
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<ShopDbContext>(options =>
+                options.UseSqlServer(
+                    connection,
+                    x => x.MigrationsAssembly("Shop.Data.DB")));
+
             services.AddSingleton(AutoMapperConfig.Initialize());
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IUserService, UserService>();
