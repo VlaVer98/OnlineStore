@@ -31,6 +31,23 @@ namespace Shop.Data.DB.Context
             modelBuilder.ApplyConfiguration(new OrderMap());
             modelBuilder.ApplyConfiguration(new ImageMap());
             modelBuilder.ApplyConfiguration(new OrderProductMap());
+
+            modelBuilder.Entity<Role>().HasData(
+                new Role[]
+                {
+                    new Role { 
+                        Id = new Guid("515f47dc-c4f1-4041-a385-bc6b0991f517"), 
+                        Name =  Domain.Constants.UserRoles.Admin,
+                        NormalizedName = Domain.Constants.UserRoles.Admin.ToUpper(),
+                        ConcurrencyStamp = "515f47dc-c4f1-4041-a385-bc6b0991f517",
+                    },
+                    new Role {
+                        Id = new Guid("1153afda-1fbd-446a-b37d-6b62ffbe3204"),
+                        Name =  Domain.Constants.UserRoles.Buyer,
+                        NormalizedName = Domain.Constants.UserRoles.Buyer.ToUpper(),
+                        ConcurrencyStamp = "1153afda-1fbd-446a-b37d-6b62ffbe3204",
+                    }
+                });
         }
     }
 }
