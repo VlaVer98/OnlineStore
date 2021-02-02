@@ -66,5 +66,25 @@ namespace Shop.WEB.Areas.Admin.Controllers
 
             return View(userProfileVM);
         }
+
+        [ActionName("Delete")]
+        public IActionResult ConfirmDelete(Guid id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Guid id)
+        {
+            ServiceResponse serviceResponse = _services.GetService<IUserService>()
+                .Delete(id);
+            if (serviceResponse.IsSuccessful)
+                return RedirectToAction("index");
+
+            foreach (var item in serviceResponse.AllMessages)
+                ModelState.AddModelError("", item);
+
+            return View();
+        }
     }
 }

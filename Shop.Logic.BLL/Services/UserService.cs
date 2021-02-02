@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shop.Domain;
 using Shop.Domain.Contracts.Services;
+using Shop.Domain.Contracts.Services.Response;
 using Shop.Domain.Models.Dtos.User;
 using Shop.Domain.Models.Identity;
 using Shop.Logic.BLL.Services.Base;
@@ -42,6 +43,26 @@ namespace Shop.Logic.BLL.Services
         {
             User user = _userManager.Users.Include(x=>x.Profile).FirstOrDefault(x => x.Id == id);
             return _mapper.Map<UserDto>(user);
+        }
+
+        public ServiceResponse Delete(Guid id)
+        {
+            User user = _userManager.Users.Include(x => x.Profile).FirstOrDefault(x => x.Id == id);
+            if (user == null)
+                return new ServiceResponse(false, $"User with id {id} does not exist");
+
+            var result = _userManager.DeleteAsync(user).GetAwaiter().GetResult();
+            if (!result.Succeeded)
+            {
+                var errors = new List<string>();
+                foreach (var item in result.Errors)
+                {
+                    errors.Add(item.Description);
+                }
+                return new ServiceResponse(false, errors);
+            }
+
+            return new ServiceResponse(true, "User is successed delete");
         }
     }
 }
