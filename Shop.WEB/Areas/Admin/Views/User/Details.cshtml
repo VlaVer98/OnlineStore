@@ -1,0 +1,29 @@
+﻿@model UserViewModel
+@{
+    ViewBag.Title = "User";
+}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Details:</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <h3>General information about user:</h3>
+        <p><b>Id User:</b> @Model.Id</p>
+        <p><b>Nick name:</b> @Model.UserName</p>
+        <p><b>Email:</b> @Model.Email</p>
+        <p><b>Phone:</b> @Model.PhoneNumber</p>
+
+        <h3>Profile information:</h3>
+        <p><b>Full name:</b> @Model.Profile.GetFullName()</p>
+        <p><b>Address:</b> @Model.Profile.Address</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <a asp-action="Edit" asp-route-id="@Model.Profile" type="button" class="btn btn-success">Edit Profile</a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" type="button" class="btn btn-danger">Delete</a>
+    </div>
+</div>

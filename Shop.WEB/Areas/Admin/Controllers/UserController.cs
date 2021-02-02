@@ -23,5 +23,14 @@ namespace Shop.WEB.Areas.Admin.Controllers
 
             return View(users);
         }
+
+        public IActionResult Details(Guid id)
+        {
+            UserDto userDto = _services.GetService<IUserService>().Get(id);
+            UserViewModel userVm = _services.GetService<IMapper>()
+                .Map<UserViewModel>(userDto);
+
+            return View(userVm);
+        }
     }
 }
