@@ -52,5 +52,34 @@ namespace Shop.WEB.Controllers
 
             return View(buyerRegistrationVM);
         }
+
+        public IActionResult Login(string returnUrl)
+        {
+            return View(new LoginViewModel { ReturnUrl = returnUrl });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel loginVM)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = _services.GetService<IUserService>().GetByEmail(loginVM.Email);
+                var result = await _services.GetService<SignInManager<User>>()
+                    .PasswordSignInAsync(user, loginVM.Password, loginVM.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    if (!string.IsNullOrEmpty(loginVM.ReturnUrl) && Url.IsLocalUrl(loginVM.ReturnUrl))
+                        return Redirect(loginVM.ReturnUrl);
+                    else
+                        return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Incorrect login and(or) password");
+                }
+            }
+
+            return View(loginVM);
+        }
     }
 }
