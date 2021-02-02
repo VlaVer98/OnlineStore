@@ -37,7 +37,7 @@ namespace Shop.WEB
                 options.UseSqlServer(
                     connection,
                     x => x.MigrationsAssembly("Shop.Data.DB")));
-            services.AddIdentity<User, Role>()
+            services.AddIdentity<User, Role>(opt => opt.User.RequireUniqueEmail = true)
                 .AddEntityFrameworkStores<ShopDbContext>();
 
             services.AddSingleton(AutoMapperConfig.Initialize());
