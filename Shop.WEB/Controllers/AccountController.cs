@@ -11,6 +11,7 @@ using Shop.Domain.Contracts.Services.Response;
 using Shop.Domain.Contracts.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Shop.WEB.Controllers
 {
@@ -80,6 +81,14 @@ namespace Shop.WEB.Controllers
             }
 
             return View(loginVM);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await _services.GetService<SignInManager<User>>().SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
