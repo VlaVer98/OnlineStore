@@ -9,7 +9,7 @@ namespace Shop.WEB.Areas.Buyer.Controllers.Base
     [Area("Buyer")]
     public class BaseBuyerController : Controller
     {
-        private readonly IServiceProvider _services;
+        protected readonly IServiceProvider _services;
 
         public BaseBuyerController(IServiceProvider service)
         {

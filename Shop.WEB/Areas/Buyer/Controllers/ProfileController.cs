@@ -1,9 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shop.Domain.Models.Dtos.User;
 using Shop.WEB.Areas.Buyer.Controllers.Base;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Shop.Domain.Contracts.Services;
+using Microsoft.AspNetCore.Identity;
+using Shop.Domain.Models.Identity;
+using Microsoft.Extensions.Options;
+using System.Security.Claims;
+using Shop.WEB.Models.ViewModels;
+using AutoMapper;
 
 namespace Shop.WEB.Areas.Buyer.Controllers
 {
@@ -14,7 +20,21 @@ namespace Shop.WEB.Areas.Buyer.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            UserDto userDto = _services.GetService<IUserService>().Get(GetNameIdentifier());
+            if (userDto == null)
+                return BadRequest();
+
+            UserViewModel userVM = _services.GetService<IMapper>()
+                .Map<UserViewModel>(userDto);
+
+            return View(userVM);
+        }
+
+        private Guid GetNameIdentifier()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier) != null ?
+                new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier))
+                : Guid.Empty;
         }
     }
 }
