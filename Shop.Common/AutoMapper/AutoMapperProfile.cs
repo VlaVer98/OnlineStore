@@ -59,6 +59,7 @@ namespace Shop.Common.AutoMapper
                 .ForMember(x => x.Stream, opt => opt.MapFrom(y => y.FormFile.OpenReadStream()))
                 .ForMember(x => x.LengthImage, opt => opt.MapFrom(y => y.FormFile.Length))
                 .ForMember(x => x.TypeImage, opt => opt.MapFrom(y => y.FormFile.ContentType));
+            CreateMap<UserProfileViewModel, UserProfileDto>();
 
             //Model -> Model
             CreateMap<BuyerRegistrationModel, User>();

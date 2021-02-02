@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Shop.WEB.Models.ViewModels;
 using AutoMapper;
+using Shop.Domain.Contracts.Services.Response;
 
 namespace Shop.WEB.Areas.Admin.Controllers
 {
@@ -31,6 +32,39 @@ namespace Shop.WEB.Areas.Admin.Controllers
                 .Map<UserViewModel>(userDto);
 
             return View(userVm);
+        }
+
+        public IActionResult EditProfile(Guid id) 
+        {
+            UserProfileDto userProfileDto = _services.GetService<IUserProfileService>()
+                .Get(id);
+            if(userProfileDto == null)
+                return BadRequest();
+
+            UserProfileViewModel userVM = _services.GetService<IMapper>()
+                .Map<UserProfileViewModel>(userProfileDto);
+            return View(userVM);
+        }
+
+        [HttpPost]
+        public IActionResult EditProfile(UserProfileViewModel userProfileVM)
+        {
+            if (ModelState.IsValid)
+            {
+                UserProfileDto userProfileDto = _services.GetService<IMapper>()
+                    .Map<UserProfileDto>(userProfileVM);
+                ServiceResponse serviceResponse = _services.GetService<IUserProfileService>()
+                    .Update(userProfileDto);
+                if (!serviceResponse.IsSuccessful)
+                {
+                    foreach (var item in serviceResponse.AllMessages)
+                    {
+                        ModelState.AddModelError("", item);
+                    }
+                }
+            }
+
+            return View(userProfileVM);
         }
     }
 }
