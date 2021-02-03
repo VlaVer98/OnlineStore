@@ -22,9 +22,14 @@ namespace Shop.Logic.BLL.Services
 
         public IEnumerable<OrderDto> GetAll()
         {
-            IEnumerable<Order> orders = _unitOfWork.Orders.GetAll(GetAllIncludeProperties())
-                .Include(x => x.User).ThenInclude(x => x.Profile);
+            IEnumerable<Order> orders = GetAllIncludeProperties();
+            return _mapper.Map<IEnumerable<OrderDto>>(orders);
+        }
 
+        public  IEnumerable<OrderDto> GetAllForUser(Guid userId)
+        {
+            IEnumerable<Order> orders = GetAllIncludeProperties()
+                .Where(x => x.UserId == userId);
             return _mapper.Map<IEnumerable<OrderDto>>(orders);
         }
 
@@ -68,12 +73,10 @@ namespace Shop.Logic.BLL.Services
             return new ServiceResponse(true, "Order is successful delete");
         }
 
-        private List<Expression<Func<Order, object>>> GetAllIncludeProperties()
+        private IEnumerable<Order> GetAllIncludeProperties()
         {
-            return new List<Expression<Func<Order, object>>> {
-                x => x.User,
-                x => x.Products
-            };
+            return _unitOfWork.Orders.Get().Include(x => x.Products)
+                .Include(x => x.User).ThenInclude(x => x.Profile);
         }
     }
 }

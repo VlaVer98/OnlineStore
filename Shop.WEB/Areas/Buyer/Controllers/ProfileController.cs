@@ -84,12 +84,5 @@ namespace Shop.WEB.Areas.Buyer.Controllers
 
             return View(userProfileVM);
         }
-
-        private Guid GetNameIdentifier()
-        {
-            return User.FindFirstValue(ClaimTypes.NameIdentifier) != null ?
-                new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier))
-                : Guid.Empty;
-        }
     }
 }
