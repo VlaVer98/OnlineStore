@@ -18,6 +18,15 @@ namespace Shop.WEB.Controllers
             _services = services;
         }
 
+        public IActionResult All()
+        {
+            IEnumerable<ProductDto> productsDto = _services.GetService<IProductService>()
+                .GetAll();
+            IEnumerable<ProductViewModel> productsVM = _services.GetService<IMapper>()
+                .Map<IEnumerable<ProductViewModel>>(productsDto);
+            return View(productsVM);
+        }
+
         public IActionResult GetByCategory(Guid id)
         {
             IEnumerable<ProductDto> productsDto = _services.GetService<IProductService>()
