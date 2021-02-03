@@ -33,13 +33,16 @@ namespace Shop.Logic.BLL.Services
             return _mapper.Map<IEnumerable<OrderDto>>(orders);
         }
 
+        public OrderDto GetForUser(Guid userId, Guid orderId)
+        {
+            Order order = GetAllIncludeProperties()
+                .FirstOrDefault(x => x.Id == orderId && x.UserId == userId);
+             return _mapper.Map<OrderDto>(order);
+        }
+
         public OrderDto GetWithAllRelations(Guid id)
         {
-            Order order = _unitOfWork.Orders.Get()
-                .Include(x => x.User).ThenInclude(x => x.Profile)
-                .Include(x => x.Products).ThenInclude(x => x.Product)
-                .FirstOrDefault(x => x.Id == id);
-
+            Order order = GetAllIncludeProperties().FirstOrDefault(x => x.Id == id);
             return _mapper.Map<OrderDto>(order);
         }
 
@@ -75,8 +78,9 @@ namespace Shop.Logic.BLL.Services
 
         private IEnumerable<Order> GetAllIncludeProperties()
         {
-            return _unitOfWork.Orders.Get().Include(x => x.Products)
-                .Include(x => x.User).ThenInclude(x => x.Profile);
+            return _unitOfWork.Orders.Get()
+                .Include(x => x.User).ThenInclude(x => x.Profile)
+                .Include(x => x.Products).ThenInclude(x => x.Product);
         }
     }
 }

@@ -23,5 +23,17 @@ namespace Shop.WEB.Areas.Buyer.Controllers
                 .Map<IEnumerable<OrderViewModel>>(ordersDto);
             return View(orderVM);
         }
+
+        public IActionResult Details(Guid Id)
+        {
+            OrderDto orderDto = _services.GetService<IOrderService>()
+                .GetForUser(GetNameIdentifier(), Id);
+            if (orderDto == null)
+                return BadRequest();
+
+            OrderViewModel orderVM = _services.GetService<IMapper>()
+                .Map<OrderViewModel>(orderDto);
+            return View(orderVM);
+        }
     }
 }
