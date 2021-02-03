@@ -13,5 +13,6 @@ namespace Shop.Domain.Contracts.Services
         public ServiceResponse Create(ProductDto productDto);
         public ServiceResponse Update(ProductDto productDto);
         public ServiceResponse Delete(Guid id);
+        public IEnumerable<ProductDto> GetAllByCategory(Guid categoryId);
     }
 }

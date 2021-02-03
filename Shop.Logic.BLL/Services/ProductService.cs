@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Shop.Domain;
 using Shop.Domain.Contracts.Services;
 using Shop.Domain.Contracts.Services.Response;
@@ -7,6 +8,7 @@ using Shop.Domain.Models.Entities;
 using Shop.Logic.BLL.Services.Base;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Shop.Logic.BLL.Services
@@ -33,6 +35,13 @@ namespace Shop.Logic.BLL.Services
                 product = _unitOfWork.Products.GetById(id);
 
             return _mapper.Map<ProductDto>(product);
+        }
+
+        public IEnumerable<ProductDto> GetAllByCategory(Guid categoryId)
+        {
+            IEnumerable<Product> products = _unitOfWork.Products.Get(GetAllIncludeProperties())
+                .Where(x => x.CategoryId == categoryId);
+            return _mapper.Map<IEnumerable<ProductDto>>(products);
         }
 
         public ServiceResponse Create(ProductDto productDto)
