@@ -26,5 +26,17 @@ namespace Shop.WEB.Controllers
                 .Map<IEnumerable<ProductViewModel>>(productsDto);
             return View(productsVM);
         }
+
+        public IActionResult Details(Guid id)
+        {
+            ProductDto productDto = _services.GetService<IProductService>()
+                .Get(id, true);
+            if (productDto == null)
+                return BadRequest();
+
+            ProductViewModel productVM = _services.GetService<IMapper>()
+                .Map<ProductViewModel>(productDto);
+            return View(productVM);
+        }
     }
 }
