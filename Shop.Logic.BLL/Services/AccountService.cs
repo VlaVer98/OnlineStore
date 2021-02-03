@@ -11,6 +11,7 @@ using Shop.Logic.BLL.Models;
 using Shop.Logic.BLL.Services.Base;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Shop.Logic.BLL.Services
@@ -73,6 +74,29 @@ namespace Shop.Logic.BLL.Services
             }
 
             return new ServiceResponse<User>(true, "Successful registration", user);
+        }
+
+        public ServiceResponse ChangePassword(Guid userId, string oldPassword, string newPassword)
+        {
+            User user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
+            if (user == null)
+                return new ServiceResponse(false, $"User with id {userId} does not exist");
+
+            if (oldPassword == string.Empty || newPassword == string.Empty)
+                return new ServiceResponse(false, "Invalid argument");
+
+            IdentityResult result =
+                _userManager.ChangePasswordAsync(user, oldPassword, newPassword).GetAwaiter().GetResult();
+
+            if (!result.Succeeded)
+            {
+                List<string> errors = new List<string>();
+                foreach (var item in result.Errors)
+                    errors.Add(item.Description);
+                return new ServiceResponse(false, errors);
+            }
+
+            return new ServiceResponse(true, "Passsword is successful change");
         }
     }
 }
