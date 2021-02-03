@@ -17,10 +17,14 @@ namespace Shop.Logic.BLL.Services
     public class UserService : BaseService, IUserService
     {
         private readonly UserManager<User> _userManager;
-        public UserService(IUnitOfWork unitOfWork, IMapper mapper, UserManager<User> userManager)
+        private readonly IUserProfileService _userProfileService;
+
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, UserManager<User> userManager, 
+            IUserProfileService userProfileService)
             : base(unitOfWork, mapper) 
         {
             _userManager = userManager;
+            _userProfileService = userProfileService;
         }
 
         public User GetByEmail(string email)
@@ -43,6 +47,17 @@ namespace Shop.Logic.BLL.Services
         {
             User user = _userManager.Users.Include(x=>x.Profile).FirstOrDefault(x => x.Id == id);
             return _mapper.Map<UserDto>(user);
+        }
+
+        public ServiceResponse UpdateProfile(Guid userId, UserProfileDto userProfileDto)
+        {
+            User user = _userManager.Users.Include(x => x.Profile).FirstOrDefault(x => x.Id == userId);
+            if (user == null)
+                return new ServiceResponse(false, $"User with id {userId} does not exist");
+            if (user.Profile.Id != userProfileDto.Id)
+                return new ServiceResponse(false, $"Data is invalid");
+
+            return _userProfileService.Update(userProfileDto);
         }
 
         public ServiceResponse Delete(Guid id)

@@ -59,6 +59,32 @@ namespace Shop.WEB.Areas.Buyer.Controllers
             return View(changingPasswordVM);
         }
 
+        public IActionResult Edit()
+        {
+            UserProfileDto userProfileDto = _services.GetService<IUserProfileService>()
+                .GetForUser(GetNameIdentifier());
+            UserProfileViewModel userProfileVM = _services.GetService<IMapper>()
+                .Map<UserProfileViewModel>(userProfileDto);
+            return View(userProfileVM);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(UserProfileViewModel userProfileVM)
+        {
+            if (ModelState.IsValid)
+            {
+                UserProfileDto userProfileDto = _services.GetService<IMapper>()
+                    .Map<UserProfileDto>(userProfileVM);
+                ServiceResponse serviceResponse = _services.GetService<IUserService>()
+                    .UpdateProfile(GetNameIdentifier(), userProfileDto);
+                if (!serviceResponse.IsSuccessful)
+                    foreach (var item in serviceResponse.AllMessages)
+                        ModelState.AddModelError("", item);
+                }
+
+            return View(userProfileVM);
+        }
+
         private Guid GetNameIdentifier()
         {
             return User.FindFirstValue(ClaimTypes.NameIdentifier) != null ?

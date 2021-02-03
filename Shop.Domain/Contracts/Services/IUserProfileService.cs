@@ -9,5 +9,6 @@ namespace Shop.Domain.Contracts.Services
     {
         public UserProfileDto Get(Guid id);
         public ServiceResponse Update(UserProfileDto userProfileDto);
+        public UserProfileDto GetForUser(Guid userId);
     }
 }

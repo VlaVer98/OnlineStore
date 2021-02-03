@@ -13,5 +13,6 @@ namespace Shop.Domain.Contracts.Services
         public User GetByEmail(string email);
         public IEnumerable<UserDto> GetAll(bool withProfile = true);
         public ServiceResponse Delete(Guid id);
+        public ServiceResponse UpdateProfile(Guid userId, UserProfileDto userProfileDto);
     }
 }

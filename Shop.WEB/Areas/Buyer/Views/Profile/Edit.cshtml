@@ -1,0 +1,39 @@
+﻿@model UserProfileViewModel
+@{
+    ViewBag.Title = "Edit a profile";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Edit a profile:</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-antiforgery="true" asp-action="Edit" asp-route-id="@Model.Id">
+            <div class="form-group">
+                <div class="validation" asp-validation-summary="All"></div>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Lastname"></label><br />
+                <input class="form-control" asp-for="@Model.Lastname" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Name"></label><br />
+                <input type="text" class="form-control" asp-for="@Model.Name" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Patronymic"></label><br />
+                <input class="form-control" asp-for="@Model.Patronymic" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Address"></label><br />
+                <input class="form-control" asp-for="@Model.Address" />
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Update" />
+            </div>
+        </form>
+    </div>
+</div>

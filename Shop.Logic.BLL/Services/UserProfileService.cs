@@ -7,6 +7,7 @@ using Shop.Domain.Models.Entities;
 using Shop.Logic.BLL.Services.Base;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Shop.Logic.BLL.Services
 {
@@ -18,6 +19,12 @@ namespace Shop.Logic.BLL.Services
         public UserProfileDto Get(Guid id)
         {
             UserProfile userProfile = _unitOfWork.UserProfiles.GetById(id);
+            return _mapper.Map<UserProfileDto>(userProfile);
+        }
+
+        public UserProfileDto GetForUser(Guid userId)
+        {
+            UserProfile userProfile = _unitOfWork.UserProfiles.Get().FirstOrDefault(x=>x.UserId == userId);
             return _mapper.Map<UserProfileDto>(userProfile);
         }
 
