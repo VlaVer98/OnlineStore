@@ -9,7 +9,6 @@ using Shop.Common.Extensions;
 using Shop.Domain.Contracts.Services.Response;
 using Shop.WEB.Models.ViewModels;
 using AutoMapper;
-using System.Text.Json;
 
 namespace Shop.WEB.Controllers
 {
@@ -44,9 +43,24 @@ namespace Shop.WEB.Controllers
                 .AddProduct(productsInCart, id);
             if (!serviceResponse.IsSuccessful)
             {
-                
+                //ToDo Display error
             }
-            AddProductsToSession(serviceResponse.ResponseObject);
+            ChangeProductsToSession(serviceResponse.ResponseObject);
+
+            return RedirectToAction("index");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteProduct(Guid id)
+        {
+            List<ProductInCartDto> productsInCart = GetProductsFromSession();
+            var serviceResponse = _services.GetService<ICartService>()
+                .DeleteProduct(productsInCart, id);
+            if (!serviceResponse.IsSuccessful)
+            {
+                //ToDo Display error
+            }
+            ChangeProductsToSession(serviceResponse.ResponseObject);
 
             return RedirectToAction("index");
         }
@@ -55,7 +69,7 @@ namespace Shop.WEB.Controllers
         {
             return HttpContext.Session.Get<List<ProductInCartDto>>("ProductsInCart");
         }
-        private void AddProductsToSession(ICollection<ProductInCartDto> products)
+        private void ChangeProductsToSession(ICollection<ProductInCartDto> products)
         {
             HttpContext.Session.Set<ICollection<ProductInCartDto>>
                 ("ProductsInCart", products);
