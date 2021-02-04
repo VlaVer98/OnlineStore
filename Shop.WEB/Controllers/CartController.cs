@@ -46,11 +46,11 @@ namespace Shop.WEB.Controllers
                 .AddProduct(productsInCart, id);
             if (!serviceResponse.IsSuccessful)
             {
-                //ToDo Display error
+                return Json(serviceResponse.AllMessages);
             }
             ChangeProductsToSession(serviceResponse.ResponseObject);
 
-            return RedirectToAction("index");
+            return Json(serviceResponse.AllMessages);
         }
 
         [HttpPost]
@@ -61,11 +61,11 @@ namespace Shop.WEB.Controllers
                 .DeleteProduct(productsInCart, id);
             if (!serviceResponse.IsSuccessful)
             {
-                //ToDo Display error
+                return Json(serviceResponse.AllMessages);
             }
             ChangeProductsToSession(serviceResponse.ResponseObject);
 
-            return RedirectToAction("index");
+            return Json(serviceResponse.AllMessages);
         }
 
         [Authorize]

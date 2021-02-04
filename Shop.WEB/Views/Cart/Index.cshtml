@@ -29,10 +29,10 @@
                             <td>@item.Product.Price</td>
                             <td>@item.Count</td>
                             <td>
-                                <form asp-antiforgery="true" asp-controller="Cart" asp-action="DeleteProduct"
-                                      asp-route-id="@item.Product.Id">
-                                    <input type="submit" class="btn btn-danger" value="Delete" />
-                                </form>
+                                <button id="ButtonDeleteProduct"
+                                        data-id="@item.Product.Id" class="btn btn-danger">
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     }
@@ -47,6 +47,39 @@
         {
             <h2>Cart is empty</h2>
         }
-
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="CartModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <a asp-controller="Cart" asp-action="index" class="btn btn-secondary">Ok</a>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $("#ButtonDeleteProduct").on("click", function (id) {
+            $.ajax({
+                url: '/Cart/DeleteProduct/' + $("#ButtonDeleteProduct").data("id"),
+                method: 'post',
+                dataType: 'json',
+                data: $(this).serialize(),
+                success: function (data) {
+                    $("#CartModal .modal-body").text(data);
+                    $('#CartModal').modal('show')
+                }
+            });
+        });
+    </script>
+}
