@@ -112,12 +112,15 @@ namespace Shop.Logic.BLL.Services
                     .FirstOrDefault(x => x.Id == item.Product.Id);
                 if(product != null)
                 {
-                    orderProducts.Add(new OrderProduct
+                    for (int i = 0; i <= item.Count; i++)
                     {
-                        Id = Guid.NewGuid(),
-                        PricePurchase = product.Price,
-                        Product = product
-                    });
+                        orderProducts.Add(new OrderProduct
+                        {
+                            Id = Guid.NewGuid(),
+                            PricePurchase = product.Price,
+                            Product = product
+                        });
+                    }
                 }
             }
 
