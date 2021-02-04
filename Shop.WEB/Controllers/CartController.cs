@@ -11,6 +11,7 @@ using Shop.WEB.Models.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Shop.WEB.Constants;
 
 namespace Shop.WEB.Controllers
 {
@@ -79,7 +80,7 @@ namespace Shop.WEB.Controllers
                 //ToDo Display a errors
                 return RedirectToAction("index");
             }
-            HttpContext.Session.Remove("ProductsInCart");
+            HttpContext.Session.Remove(SessionKeys.PRODUCTS_IN_CART);
             return RedirectToAction("Details", "Order", new { 
                 area = "Buyer",
                 id = serviceResponse.ResponseObject.Id
@@ -95,12 +96,13 @@ namespace Shop.WEB.Controllers
 
         private List<ProductInCartDto> GetProductsFromSession()
         {
-            return HttpContext.Session.Get<List<ProductInCartDto>>("ProductsInCart");
+            return HttpContext.Session.Get<List<ProductInCartDto>>(SessionKeys.PRODUCTS_IN_CART);
         }
+
         private void ChangeProductsToSession(ICollection<ProductInCartDto> products)
         {
             HttpContext.Session.Set<ICollection<ProductInCartDto>>
-                ("ProductsInCart", products);
+                (SessionKeys.PRODUCTS_IN_CART, products);
         }
     }
 }
