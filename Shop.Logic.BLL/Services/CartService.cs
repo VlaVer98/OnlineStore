@@ -33,6 +33,8 @@ namespace Shop.Logic.BLL.Services
             if(product.Status == ProductStatus.NotAvailable)
                 return new ServiceResponse<ICollection<ProductInCartDto>>
                     (false, $"Product {product.Title} out of stock", productsDto);
+            if (productsDto == null)
+                productsDto = new List<ProductInCartDto>();
 
             var productInCart = productsDto.FirstOrDefault(x => x.Product.Id == product.Id);
             if (productInCart == null)
@@ -95,7 +97,7 @@ namespace Shop.Logic.BLL.Services
         public ServiceResponse<OrderDto> MakeOrder(Guid userId, CartDto cartDto)
         {
             CartDto updatedCartDto = UpdateCart(cartDto.Products);
-            if (updatedCartDto.SumTotal <= 0)
+            if (updatedCartDto.TotalSum <= 0)
                 return new ServiceResponse<OrderDto>(false, "Cart is empty", null);
 
             User user = _unitOfWork.Users.GetById(userId);
@@ -122,7 +124,7 @@ namespace Shop.Logic.BLL.Services
             {
                 Id = Guid.NewGuid(),
                 Products = orderProducts,
-                Amount = updatedCartDto.SumTotal,
+                Amount = updatedCartDto.TotalSum,
                 Created = DateTime.Now,
                 Updated = DateTime.Now,
                 Status = OrderStatus.Processing,

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Text;
 using System.Text.Json;
 
 namespace Shop.Common.Extensions    
@@ -7,7 +8,7 @@ namespace Shop.Common.Extensions
     {
         public static void Set<T>(this ISession session, string key, T value)
         {
-            session.Set(key, JsonSerializer.Serialize<T>(value));
+            session.Set(key, Encoding.Default.GetBytes(JsonSerializer.Serialize<T>(value)));
         }
 
         public static T Get<T>(this ISession session, string key)

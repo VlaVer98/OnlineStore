@@ -22,7 +22,10 @@
             <p> @Model.Content</p>
             @if (Model.Status == Shop.Domain.enums.ProductStatus.Available)
             {
-                <a src="#" class="btn btn-success">Buy</a>
+                <form asp-antiforgery="true" asp-controller="Cart" asp-action="AddProduct" 
+                      asp-route-id="@Model.Id">
+                    <input type="submit" class="btn btn-success" value="Buy" />
+                </form>
             }
             else
             {

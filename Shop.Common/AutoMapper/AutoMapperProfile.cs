@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Shop.Domain.Models.Dtos.Account;
+using Shop.Domain.Models.Dtos.Cart;
 using Shop.Domain.Models.Dtos.Category;
 using Shop.Domain.Models.Dtos.Image;
 using Shop.Domain.Models.Dtos.Order;
@@ -29,6 +30,8 @@ namespace Shop.Common.AutoMapper
                 .ForMember(x => x.User, opt => opt.MapFrom(y => y.User.Profile));
             CreateMap<UserProfile, UserProfileDto>();
             CreateMap<User, UserDto>();
+            CreateMap<CartModel, CartDto>();
+            CreateMap<ProductInCart, ProductInCartDto>();
 
             //BLL -> DAL
             CreateMap<CategoryDto, Category>();
@@ -47,6 +50,8 @@ namespace Shop.Common.AutoMapper
             CreateMap<BuyerRegistrationDto, BuyerRegistrationModel>();
             CreateMap<UserProfileDto, UserProfileViewModel>();
             CreateMap<UserDto, UserViewModel>();
+            CreateMap<ProductInCartDto, ProductInCartViewModel>();
+            CreateMap<CartDto, CartViewModel>();
 
             //Presentation -> BLL
             CreateMap<CategoryViewModel, CategoryDto>();

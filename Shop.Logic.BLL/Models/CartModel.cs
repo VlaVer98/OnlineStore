@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Shop.Logic.BLL.Models
 {
-    class CartModel : ICartModel
+    public class CartModel : ICartModel
     {
         public decimal TotalSum { get; set; }
         public ICollection<IProductInCart> Products { get; }
