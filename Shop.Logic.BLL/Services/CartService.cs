@@ -84,6 +84,9 @@ namespace Shop.Logic.BLL.Services
 
         public ServiceResponse<CartDto> CountCart(ICollection<ProductInCartDto> productsDto)
         {
+            if(productsDto == null)
+                return new ServiceResponse<CartDto>(false, $"Cart is empty", null);
+
             CartDto cartDto = UpdateCart(productsDto);
             return new ServiceResponse<CartDto>
                 (true, $"Cart", cartDto);

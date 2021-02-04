@@ -23,17 +23,15 @@ namespace Shop.WEB.Controllers
 
         public IActionResult Index()
         {
-            List<ProductInCartDto> ProductsInCart = _services.GetService<ISession>()
+            List<ProductInCartDto> ProductsInCart = HttpContext.Session
                 .Get<List<ProductInCartDto>>("ProductsInCart");
             ServiceResponse<CartDto> serviceResponse = _services.GetService<ICartService>()
                 .CountCart(ProductsInCart);
 
-            CartViewModel cartViewModel;
+            CartViewModel cartViewModel = null;
             if (serviceResponse.IsSuccessful)
                 cartViewModel = _services.GetService<IMapper>()
                     .Map<CartViewModel>(serviceResponse.ResponseObject);
-            else
-                cartViewModel = new CartViewModel { TotalSum = 0 };
 
             return View(cartViewModel);
         }
