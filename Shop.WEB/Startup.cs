@@ -53,6 +53,10 @@ namespace Shop.WEB
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<ICartService, CartService>();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession();
 
             services.AddControllersWithViews();
         }
@@ -70,6 +74,8 @@ namespace Shop.WEB
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSession();
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

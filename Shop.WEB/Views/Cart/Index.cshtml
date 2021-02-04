@@ -1,0 +1,42 @@
+﻿@model CartViewModel
+@{
+    ViewData["Title"] = "Cart";
+}
+<div class="row">
+    <div class="col">
+        <h1>Cart:</h1>
+    </div>
+</div>
+<div class="row mt-1">
+    <div class="col-md">
+        @if (Model.Products != null)
+        {
+            <h3>Products</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>Title</td>
+                        <td>Price</td>
+                        <td>Count</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Products)
+                    {
+                        <tr>
+                            <td>@item.Product.Title</td>
+                            <td>@item.Product.Price</td>
+                            <td>@item.Count</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <h3>Total: @Model.TotalSum</h3>
+        }
+        else
+        {
+            <h2>Cart is empty</h2>
+        }
+
+    </div>
+</div>
