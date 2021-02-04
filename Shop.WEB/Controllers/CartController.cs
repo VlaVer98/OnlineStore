@@ -9,6 +9,8 @@ using Shop.Common.Extensions;
 using Shop.Domain.Contracts.Services.Response;
 using Shop.WEB.Models.ViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Shop.WEB.Controllers
 {
@@ -63,6 +65,32 @@ namespace Shop.WEB.Controllers
             ChangeProductsToSession(serviceResponse.ResponseObject);
 
             return RedirectToAction("index");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult MakeOrder()
+        {
+            List<ProductInCartDto> productsInCart = GetProductsFromSession();
+            var serviceResponse = _services.GetService<ICartService>()
+                .MakeOrder(GetNameIdentifier(), productsInCart);
+            if (!serviceResponse.IsSuccessful)
+            {
+                //ToDo Display a errors
+                return RedirectToAction("index");
+            }
+            HttpContext.Session.Remove("ProductsInCart");
+            return RedirectToAction("Details", "Order", new { 
+                area = "Buyer",
+                id = serviceResponse.ResponseObject.Id
+            });
+
+        }
+        protected Guid GetNameIdentifier()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier) != null ?
+                new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier))
+                : Guid.Empty;
         }
 
         private List<ProductInCartDto> GetProductsFromSession()

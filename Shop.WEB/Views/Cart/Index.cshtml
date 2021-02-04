@@ -39,6 +39,9 @@
                 </tbody>
             </table>
             <h3>Total: @Model.TotalSum</h3>
+            <form asp-antiforgery="true" asp-controller="Cart" asp-action="MakeOrder">
+                <input type="submit" class="btn btn-success" value="Make an order" />
+            </form>
         }
         else
         {

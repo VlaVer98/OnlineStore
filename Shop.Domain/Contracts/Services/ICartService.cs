@@ -15,6 +15,7 @@ namespace Shop.Domain.Contracts.Services
              ICollection<ProductInCartDto> productsDto, Guid idProduct);
         public ServiceResponse<CartDto> CountCart(
             ICollection<ProductInCartDto> productsDto);
-        public ServiceResponse<OrderDto> MakeOrder(Guid userId, CartDto cartDto);
+        public ServiceResponse<OrderDto> MakeOrder(Guid userId,
+             ICollection<ProductInCartDto> productsDto);
     }
 }

@@ -94,9 +94,10 @@ namespace Shop.Logic.BLL.Services
                 (true, $"Cart", cartDto);
         }
 
-        public ServiceResponse<OrderDto> MakeOrder(Guid userId, CartDto cartDto)
+        public ServiceResponse<OrderDto> MakeOrder(Guid userId, 
+            ICollection<ProductInCartDto> productsDto)
         {
-            CartDto updatedCartDto = UpdateCart(cartDto.Products);
+            CartDto updatedCartDto = UpdateCart(productsDto);
             if (updatedCartDto.TotalSum <= 0)
                 return new ServiceResponse<OrderDto>(false, "Cart is empty", null);
 
