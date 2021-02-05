@@ -36,7 +36,7 @@
                     </ul>
                 </div>
                 <div class="float-lg-right">
-                    <form asp-antiforgery="true" asp-controller="Account" asp-action="Logout">
+                    <form asp-antiforgery="true" asp-area="" asp-controller="Account" asp-action="Logout">
                         <label class="mr-1">@User.Identity.Name</label>
                         <input type="submit" class="btn btn-light btn-sm" value="Logout" />
                     </form>

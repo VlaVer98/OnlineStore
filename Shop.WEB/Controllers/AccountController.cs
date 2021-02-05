@@ -88,7 +88,7 @@ namespace Shop.WEB.Controllers
         public async Task<IActionResult> Logout()
         {
             await _services.GetService<SignInManager<User>>().SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
     }
 }
