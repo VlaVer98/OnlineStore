@@ -24,7 +24,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Buyer" asp-controller="Order" asp-action="Index">Orders</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Go to store</a>
+                        </li>
                     </ul>
+                </div>
+                <div class="float-lg-right">
+                    <form asp-antiforgery="true" asp-controller="Account" asp-action="Logout">
+                        <label class="mr-1">@User.Identity.Name</label>
+                        <input type="submit" class="btn btn-light btn-sm" value="Logout" />
+                    </form>
                 </div>
             </div>
         </nav>
