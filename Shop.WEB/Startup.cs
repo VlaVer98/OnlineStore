@@ -1,20 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Shop.Common.AutoMapper;
-using Shop.Data.DB;
-using Shop.Data.DB.Context;
-using Shop.Domain;
-using Shop.Domain.Contracts.Services;
-using Shop.Domain.Models.Identity;
-using Shop.Logic.BLL.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Shop.Common.Extensions.ServiceProvider;
 using System.Threading.Tasks;
 
 namespace Shop.WEB
@@ -33,27 +23,7 @@ namespace Shop.WEB
         {
             //Service registration
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ShopDbContext>(options =>
-                options.UseSqlServer(
-                    connection,
-                    x => x.MigrationsAssembly("Shop.Data.DB")));
-            services.AddIdentity<User, Role>(opt =>
-                {
-                    opt.User.RequireUniqueEmail = true;
-                    opt.SignIn.RequireConfirmedEmail = false;
-                }).AddEntityFrameworkStores<ShopDbContext>();
-
-            services.AddSingleton(AutoMapperConfig.Initialize());
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IAccountService, AccountService>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IUserProfileService, UserProfileService>();
-            services.AddTransient<IRoleService, RoleService>();
-            services.AddTransient<IProductService, ProductService>();
-            services.AddTransient<ICategoryService, CategoryService>();
-            services.AddTransient<IOrderService, OrderService>();
-            services.AddTransient<IImageService, ImageService>();
-            services.AddTransient<ICartService, CartService>();
+            services.AddShopService(connection);
 
             services.AddDistributedMemoryCache();
             services.AddSession();
