@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Shop.Domain.Constants;
 using Shop.WEB.Models;
 using System;
 using System.Diagnostics;
@@ -6,6 +8,7 @@ using System.Diagnostics;
 namespace Shop.WEB.Areas.Admin.Controllers.Base
 {
     [Area("Admin")]
+    [Authorize(Roles = UserRoles.Admin)]
     public class BaseAdminController : Controller
     {
         protected readonly IServiceProvider _services;
