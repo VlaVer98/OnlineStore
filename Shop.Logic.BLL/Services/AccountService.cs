@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Shop.Domain;
+using Shop.Domain.Constants;
 using Shop.Domain.Contracts.Models;
 using Shop.Domain.Contracts.Services;
 using Shop.Domain.Contracts.Services.Response;
@@ -71,6 +72,12 @@ namespace Shop.Logic.BLL.Services
                     errors.Add(error.Description);
                 }
                 return new ServiceResponse<User>(false, errors, null);
+            }
+
+            result = _userManager.AddToRoleAsync(user, UserRoles.Buyer).GetAwaiter().GetResult();
+            if (!result.Succeeded)
+            {
+                throw new InvalidOperationException(result.Errors.First().Description);
             }
 
             return new ServiceResponse<User>(true, "Successful registration", user);
