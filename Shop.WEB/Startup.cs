@@ -86,6 +86,12 @@ namespace Shop.WEB
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGet("Cart/MakeOrder", context =>
+                {
+                    context.Response.Redirect("/Cart/Index", permanent: false);
+                    return Task.CompletedTask;
+                } 
+                );
                 endpoints.MapControllerRoute(
                     name: "Area",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
