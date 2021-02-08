@@ -5,22 +5,26 @@ using System.Text;
 
 namespace Shop.WEB.Models.Models.Response
 {
-    public class APIResponseModel<T> where T : class
+    public class APIResponseModel
     {
         public bool IsSuccessful { get; set; }
         public List<string> Messages { get; set; }
-        public T Data { get; set; }
 
         public APIResponseModel()
         {
             Messages = new List<string>();
-            Data = null;
         }
 
         public APIResponseModel(bool isSuccessful)
             : this()
         {
             IsSuccessful = isSuccessful;
+        }
+
+        public APIResponseModel(bool isSuccessful, List<string> messages)
+            : this(isSuccessful)
+        {
+            Messages = messages;
         }
 
         public APIResponseModel(bool isSuccessful, ModelStateDictionary modelState)
@@ -36,11 +40,27 @@ namespace Shop.WEB.Models.Models.Response
                 Messages = errors;
             }
         }
+    }
+
+    public class APIResponseModel<T> : APIResponseModel where T : class
+    {
+        public T Data { get; set; }
+
+        public APIResponseModel()
+            : base()
+        {
+            Data = null;
+        }
+
+        public APIResponseModel(bool isSuccessful)
+            : base(isSuccessful) {}
+
+        public APIResponseModel(bool isSuccessful, ModelStateDictionary modelState)
+            : base(isSuccessful, modelState) {}
 
         public APIResponseModel(bool isSuccessful, List<string> messages, T data = null)
-            : this(isSuccessful)
+            : base(isSuccessful, messages)
         {
-            Messages = messages;
             Data = data;
         }
     }
