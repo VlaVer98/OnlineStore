@@ -5,13 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using Shop.Domain.Models.Dtos.Cart;
-using Shop.Common.Extensions;
 using Shop.Domain.Contracts.Services.Response;
 using Shop.WEB.Models.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using Shop.WEB.Constants;
+using Shop.WEB.Core.Extensions.Session;
+using Shop.WEB.Core.Constants;
 
 namespace Shop.WEB.Controllers
 {

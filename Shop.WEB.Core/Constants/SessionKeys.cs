@@ -1,4 +1,4 @@
-﻿namespace Shop.WEB.Constants
+﻿namespace Shop.WEB.Core.Constants
 {
     public static class SessionKeys
     {

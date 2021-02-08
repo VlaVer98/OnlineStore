@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Shop.Common.Extensions.ServiceProvider;
+using Shop.WEB.Core.Extensions.ServiceProvider;
 
 namespace Shop.API
 {

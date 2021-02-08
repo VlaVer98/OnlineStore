@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shop.Common\Shop.Common.csproj" />
+    <ProjectReference Include="..\Shop.WEB.Core\Shop.WEB.Core.csproj" />
+    <ProjectReference Include="..\Shop.WEB.Models\Shop.WEB.Models.csproj" />
   </ItemGroup>
 
 
