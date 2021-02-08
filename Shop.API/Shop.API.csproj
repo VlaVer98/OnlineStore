@@ -6,8 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shop.Common\Shop.Common.csproj" />
-    <ProjectReference Include="..\Shop.Domain\Shop.Domain.csproj" />
-    <ProjectReference Include="..\Shop.WEB.Models\Shop.WEB.Models.csproj" />
   </ItemGroup>
 
 
