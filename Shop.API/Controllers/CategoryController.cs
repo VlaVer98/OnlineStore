@@ -7,6 +7,7 @@ using Shop.Domain.Models.Dtos.Category;
 using Shop.WEB.Models.ViewModels;
 using Shop.Domain.Contracts.Services.Response;
 using AutoMapper;
+using Shop.WEB.Models.Models.Response;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,7 +30,9 @@ namespace Shop.API.Controllers
         {
             IEnumerable<CategoryDto> categoryDtos = _services.GetService<ICategoryService>()
                 .GetAll();
-            return new ObjectResult(categoryDtos);
+            APIResponseModel<IEnumerable<CategoryDto>> response =
+                new APIResponseModel<IEnumerable<CategoryDto>>(true, null, categoryDtos);
+            return new ObjectResult(response);
         }
 
         // GET api/<CategoryController>/5
@@ -38,7 +41,9 @@ namespace Shop.API.Controllers
         {
             CategoryDto category = _services.GetService<ICategoryService>()
                 .Get(id);
-            return new ObjectResult(category);
+            APIResponseModel<CategoryDto> response =
+                new APIResponseModel<CategoryDto>(true, null, category);
+            return new ObjectResult(response);
         }
 
         // POST api/<CategoryController>
@@ -46,21 +51,19 @@ namespace Shop.API.Controllers
         public IActionResult Post(CategoryViewModel categoryVM)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState.Values);
+                return BadRequest(
+                    new APIResponseModel<CategoryDto>(false, ModelState));
 
             CategoryDto categoryDto = _services.GetService<IMapper>()
                 .Map<CategoryDto>(categoryVM);
             ServiceResponse serviceResponse = _services.GetService<ICategoryService>()
                 .Create(categoryDto);
-            if (!serviceResponse.IsSuccessful)
-            {
-                foreach (var item in serviceResponse.AllMessages)
-                    ModelState.AddModelError("", item);
 
-                return BadRequest(ModelState.Values);
-            }
+            if (!serviceResponse.IsSuccessful)
+                return BadRequest(
+                    new APIResponseModel<CategoryDto>(false, serviceResponse.AllMessages));
                 
-            return Ok();
+            return Ok(new APIResponseModel<CategoryDto>(true, serviceResponse.AllMessages));
         }
 
         // PUT api/<CategoryController>/5
@@ -68,20 +71,17 @@ namespace Shop.API.Controllers
         public IActionResult Put(CategoryViewModel categoryVM)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState.Values);
+                return BadRequest(
+                    new APIResponseModel<CategoryDto>(false, ModelState));
 
             CategoryDto categoryDto = _services.GetService<IMapper>().Map<CategoryDto>(categoryVM);
             ServiceResponse serviceResponse = _services.GetService<ICategoryService>().Update(categoryDto);
 
             if (!serviceResponse.IsSuccessful)
-            {
-                foreach (var item in serviceResponse.AllMessages)
-                    ModelState.AddModelError("", item);
+                return BadRequest(
+                    new APIResponseModel<CategoryDto>(false, serviceResponse.AllMessages));
 
-                return BadRequest(ModelState.Values);
-            }
-
-            return Ok();
+            return Ok(new APIResponseModel<CategoryDto>(true, serviceResponse.AllMessages));
         }
 
         // DELETE api/<CategoryController>/5
@@ -90,14 +90,10 @@ namespace Shop.API.Controllers
         {
             ServiceResponse serviceResponse = _services.GetService<ICategoryService>().Delete(id);
             if (!serviceResponse.IsSuccessful)
-            {
-                foreach (var item in serviceResponse.AllMessages)
-                    ModelState.AddModelError("", item);
+                return BadRequest(
+                    new APIResponseModel<CategoryDto>(false, serviceResponse.AllMessages));
 
-                return BadRequest(ModelState.Values);
-            }
-
-            return Ok();
+            return Ok(new APIResponseModel<CategoryDto>(true, serviceResponse.AllMessages));
         }
     }
 }
