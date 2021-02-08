@@ -8,6 +8,7 @@ using Shop.WEB.Models.ViewModels;
 using Shop.Domain.Contracts.Services.Response;
 using AutoMapper;
 using Shop.WEB.Models.Models.Response;
+using Shop.API.Controllers.Base;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,14 +16,10 @@ namespace Shop.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class CategoryController : BaseController
     {
-        private readonly IServiceProvider _services;
-
         public CategoryController(IServiceProvider serviceProvider)
-        {
-            _services = serviceProvider;
-        }
+            : base(serviceProvider) { }
 
         // GET: api/<CategoryController>
         [HttpGet]
