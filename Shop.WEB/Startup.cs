@@ -40,6 +40,8 @@ namespace Shop.WEB
                     options.ClientId = "mvc";
                     options.ClientSecret = "secret";
                     options.ResponseType = "code";
+                    options.Scope.Add("profile");
+                    options.GetClaimsFromUserInfoEndpoint = true;   
 
                     options.SaveTokens = true;
                     //options.RequireHttpsMetadata = false;
