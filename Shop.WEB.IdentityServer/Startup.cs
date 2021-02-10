@@ -16,6 +16,11 @@ namespace Shop.WEB.IdentityServer
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            var builder = services.AddIdentityServer()
+                .AddInMemoryApiScopes(Config.ApiScopes)
+                .AddInMemoryClients(Config.Clients);
+
+            builder.AddDeveloperSigningCredential();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -28,13 +33,15 @@ namespace Shop.WEB.IdentityServer
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
+            app.UseIdentityServer();
+
+/*            app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Hello World!");
                 });
-            });
+            });*/
         }
     }
 }
