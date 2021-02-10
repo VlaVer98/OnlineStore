@@ -20,7 +20,8 @@ namespace Shop.WEB.IdentityServer
 
             var builder = services.AddIdentityServer()
                 .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients);
+                .AddInMemoryClients(Config.Clients)
+                .AddInMemoryIdentityResources(Config.IdentityResources);
 
             builder.AddDeveloperSigningCredential();
         }

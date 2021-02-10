@@ -31,5 +31,12 @@ namespace Shop.WEB.IdentityServer
                     AllowedScopes = { "api1" }
                 }
             };
+
+        public static IEnumerable<IdentityResource> IdentityResources =>
+            new List<IdentityResource>
+            {
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile(),
+            };
     }
 }
