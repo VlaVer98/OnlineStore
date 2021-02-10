@@ -6,6 +6,13 @@
 
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="4.1.1" />
+    <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shop.Data.DB\Shop.Data.DB.csproj" />
   </ItemGroup>
 
 </Project>

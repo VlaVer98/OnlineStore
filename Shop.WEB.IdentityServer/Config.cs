@@ -29,7 +29,7 @@ namespace Shop.WEB.IdentityServer
                     },
 
                     // scopes that client has access to
-                    AllowedScopes = { "api1" }
+                    AllowedScopes = { "api" }
                 },
                 new Client
                 {
@@ -47,7 +47,8 @@ namespace Shop.WEB.IdentityServer
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "api"
                     }
                 }
             };

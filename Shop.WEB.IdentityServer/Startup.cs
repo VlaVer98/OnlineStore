@@ -1,28 +1,53 @@
-using IdentityServerHost.Quickstart.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Shop.Data.DB.Context;
+using Shop.Domain.Models.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace Shop.WEB.IdentityServer
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
 
-            var builder = services.AddIdentityServer()
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<ShopDbContext>(options =>
+                options.UseSqlServer(
+                    connection,
+                    x => x.MigrationsAssembly("Shop.Data.DB")));
+            services.AddIdentity<User, Role>(opt =>
+            {
+                opt.User.RequireUniqueEmail = true;
+                opt.SignIn.RequireConfirmedEmail = false;
+            })
+                .AddEntityFrameworkStores<ShopDbContext>()
+                .AddDefaultTokenProviders();
+
+            var builder = services.AddIdentityServer(options =>
+            {
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseSuccessEvents = true;
+                options.EmitStaticAudienceClaim = true;
+            })
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients);
+                .AddInMemoryClients(Config.Clients)
+                .AddAspNetIdentity<User>();
 
             builder.AddDeveloperSigningCredential();
         }
@@ -36,11 +61,10 @@ namespace Shop.WEB.IdentityServer
             }
 
             app.UseStaticFiles();
+
             app.UseRouting();
-
             app.UseIdentityServer();
-            //app.UseAuthorization();
-
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
