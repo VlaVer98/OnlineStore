@@ -35,14 +35,14 @@ namespace Shop.WEB
                 .AddCookie("Cookies")
                 .AddOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = "http://localhost:56562";
+                    options.Authority = "https://localhost:44372";
 
                     options.ClientId = "mvc";
                     options.ClientSecret = "secret";
                     options.ResponseType = "code";
 
                     options.SaveTokens = true;
-                    options.RequireHttpsMetadata = false;
+                    //options.RequireHttpsMetadata = false;
                 });
 
             services.AddDistributedMemoryCache();

@@ -1,3 +1,4 @@
+using IdentityServerHost.Quickstart.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -19,9 +20,9 @@ namespace Shop.WEB.IdentityServer
             services.AddControllersWithViews();
 
             var builder = services.AddIdentityServer()
+                .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients)
-                .AddInMemoryIdentityResources(Config.IdentityResources);
+                .AddInMemoryClients(Config.Clients);
 
             builder.AddDeveloperSigningCredential();
         }
