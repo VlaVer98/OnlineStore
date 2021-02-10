@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shop.WEB.Core.Extensions.ServiceProvider;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
 namespace Shop.WEB
@@ -24,6 +25,25 @@ namespace Shop.WEB
             //Service registration
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddShopService(connection);
+
+            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Cookies";
+                options.DefaultChallengeScheme = "oidc";
+            })
+                .AddCookie("Cookies")
+                .AddOpenIdConnect("oidc", options =>
+                {
+                    options.Authority = "http://localhost:56562";
+
+                    options.ClientId = "mvc";
+                    options.ClientSecret = "secret";
+                    options.ResponseType = "code";
+
+                    options.SaveTokens = true;
+                    options.RequireHttpsMetadata = false;
+                });
 
             services.AddDistributedMemoryCache();
             services.AddSession();
