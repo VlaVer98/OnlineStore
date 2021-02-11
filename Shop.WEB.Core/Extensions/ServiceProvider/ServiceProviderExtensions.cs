@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Shop.Data.DB;
 using Shop.Data.DB.Context;
@@ -18,18 +19,11 @@ namespace Shop.WEB.Core.Extensions.ServiceProvider
                 options.UseSqlServer(
                     connectionDB,
                     x => x.MigrationsAssembly("Shop.Data.DB")));
-            services.AddIdentity<User, Role>(opt =>
-            {
-                opt.User.RequireUniqueEmail = true;
-                opt.SignIn.RequireConfirmedEmail = false;
-            }).AddEntityFrameworkStores<ShopDbContext>();
-
+            services.AddIdentityCore<User>().AddEntityFrameworkStores<ShopDbContext>();
             services.AddSingleton(AutoMapperConfig.Initialize());
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserProfileService, UserProfileService>();
-            services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IOrderService, OrderService>();

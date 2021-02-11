@@ -1,6 +1,7 @@
 ﻿using IdentityServer4;
 using IdentityServer4.Models;
 using System.Collections.Generic;
+using static IdentityServer4.IdentityServerConstants;
 
 namespace Shop.WEB.IdentityServer
 {
@@ -40,15 +41,15 @@ namespace Shop.WEB.IdentityServer
 
                     // where to redirect to after login
                     RedirectUris = { "https://localhost:44364/signin-oidc" },
-
                     // where to redirect to after logout
                     PostLogoutRedirectUris = { "https://localhost:44364/signin-oidc" },
 
-                    AllowedScopes = new List<string>
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        "api"
+                    RequireConsent = false,
+
+                    AllowedScopes = { 
+                        StandardScopes.OpenId,
+                        StandardScopes.Profile,
+                        "roles"
                     }
                 }
             };
@@ -58,6 +59,7 @@ namespace Shop.WEB.IdentityServer
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResource("roles", new[] { "role" })
             };
     }
 }

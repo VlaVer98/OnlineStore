@@ -1,11 +1,14 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Shop.WEB.Core.Extensions.ServiceProvider;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Shop.WEB
@@ -27,6 +30,7 @@ namespace Shop.WEB
             services.AddShopService(connection);
 
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = "Cookies";
@@ -41,7 +45,17 @@ namespace Shop.WEB
                     options.ClientSecret = "secret";
                     options.ResponseType = "code";
                     options.Scope.Add("profile");
-                    options.GetClaimsFromUserInfoEndpoint = true;   
+                    options.Scope.Add("roles");
+
+                    options.GetClaimsFromUserInfoEndpoint = true;
+
+                    options.SignedOutRedirectUri = "http://localhost:44364";
+
+                    options.ClaimActions.MapJsonKey("role", "role", "role");
+                    options.TokenValidationParameters.RoleClaimType = "role";
+
+                    options.ClaimActions.MapJsonKey("name", "name", "name");
+                    options.TokenValidationParameters.NameClaimType = "name";
 
                     options.SaveTokens = true;
                     //options.RequireHttpsMetadata = false;
@@ -67,7 +81,7 @@ namespace Shop.WEB
                 app.UseHsts();
             }
             app.UseSession();
-            
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -82,7 +96,7 @@ namespace Shop.WEB
                 {
                     context.Response.Redirect("/Cart/Index", permanent: false);
                     return Task.CompletedTask;
-                } 
+                }
                 );
                 endpoints.MapControllerRoute(
                     name: "Area",

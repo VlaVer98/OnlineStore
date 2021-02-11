@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using Shop.Data.DB.Context;
 using Shop.Domain.Models.Identity;
 using Microsoft.Extensions.Configuration;
+using IdentityServer4.Services;
+using Shop.WEB.IdentityServer.Services;
 
 namespace Shop.WEB.IdentityServer
 {
@@ -22,6 +24,7 @@ namespace Shop.WEB.IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddTransient<IProfileService, ProfileService>();
 
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ShopDbContext>(options =>

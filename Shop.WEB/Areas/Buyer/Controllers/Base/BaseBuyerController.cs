@@ -19,8 +19,8 @@ namespace Shop.WEB.Areas.Buyer.Controllers.Base
 
         protected Guid GetNameIdentifier()
         {
-            return User.FindFirstValue(ClaimTypes.NameIdentifier) != null ?
-                new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier))
+            return User.FindFirstValue("sub") != null ?
+                new Guid(User.FindFirstValue("sub"))
                 : Guid.Empty;
         }
     }
