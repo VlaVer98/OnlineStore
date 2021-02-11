@@ -12,17 +12,14 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Shop.WEB.Core.Extensions.Session;
 using Shop.WEB.Core.Constants;
+using Shop.WEB.Controllers.Base;
 
 namespace Shop.WEB.Controllers
 {
-    public class CartController : Controller
+    public class CartController : BaseController
     {
-        private readonly IServiceProvider _services;
-
         public CartController(IServiceProvider services)
-        {
-            _services = services;
-        }
+            : base(services) { }
 
         public IActionResult Index()
         {
@@ -86,12 +83,6 @@ namespace Shop.WEB.Controllers
                 id = serviceResponse.ResponseObject.Id
             });
 
-        }
-        protected Guid GetNameIdentifier()
-        {
-            return User.FindFirstValue(ClaimTypes.NameIdentifier) != null ?
-                new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier))
-                : Guid.Empty;
         }
 
         private List<ProductInCartDto> GetProductsFromSession()

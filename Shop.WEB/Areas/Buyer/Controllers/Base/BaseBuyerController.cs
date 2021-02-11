@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Domain.Constants;
+using Shop.WEB.Controllers.Base;
 using System;
 using System.Security.Claims;
 
@@ -8,20 +9,9 @@ namespace Shop.WEB.Areas.Buyer.Controllers.Base
 {
     [Area("Buyer")]
     [Authorize(Roles = UserRoles.Buyer)]
-    public class BaseBuyerController : Controller
+    public class BaseBuyerController : BaseController
     {
-        protected readonly IServiceProvider _services;
-
-        public BaseBuyerController(IServiceProvider service)
-        {
-            _services = service;
-        }
-
-        protected Guid GetNameIdentifier()
-        {
-            return User.FindFirstValue("sub") != null ?
-                new Guid(User.FindFirstValue("sub"))
-                : Guid.Empty;
-        }
+        public BaseBuyerController(IServiceProvider services)
+            : base(services) { }
     }
 }
