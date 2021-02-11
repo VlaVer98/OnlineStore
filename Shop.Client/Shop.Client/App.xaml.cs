@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Shop.Client.Xamarin
+namespace Shop.Client
 {
     public partial class App : Application
     {
