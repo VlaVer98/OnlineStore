@@ -4,14 +4,13 @@ using Shop.Domain.Models.Identity;
 using Shop.WEB.Models.ViewModels;
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using Shop.Domain.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Shop.Domain.Models.Dtos.Account;
 using Shop.Domain.Contracts.Services.Response;
 using Shop.Domain.Contracts.Services;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Shop.WEB.Controllers
 {
@@ -54,41 +53,19 @@ namespace Shop.WEB.Controllers
             return View(buyerRegistrationVM);
         }
 
-        public IActionResult Login(string returnUrl)
+        public IActionResult Login()
         {
-            return View(new LoginViewModel { ReturnUrl = returnUrl });
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginVM)
-        {
-            if (ModelState.IsValid)
+            return Challenge(new AuthenticationProperties
             {
-                User user = _services.GetService<IUserService>().GetByEmail(loginVM.Email);
-                var result = await _services.GetService<SignInManager<User>>()
-                    .PasswordSignInAsync(user, loginVM.Password, loginVM.RememberMe, false);
-                if (result.Succeeded)
-                {
-                    if (!string.IsNullOrEmpty(loginVM.ReturnUrl) && Url.IsLocalUrl(loginVM.ReturnUrl))
-                        return Redirect(loginVM.ReturnUrl);
-                    else
-                        return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Incorrect login and(or) password");
-                }
-            }
-
-            return View(loginVM);
+                RedirectUri = "/"
+            });
         }
 
-        [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Logout()
+        public async Task Logout()
         {
-            await _services.GetService<SignInManager<User>>().SignOutAsync();
-            return RedirectToAction("Index", "Home", new { area = "" });
+            await HttpContext.SignOutAsync("Cookies");
+            await HttpContext.SignOutAsync("oidc");
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Shop.WEB.IdentityServer
                     // where to redirect to after login
                     RedirectUris = { "https://localhost:44364/signin-oidc" },
                     // where to redirect to after logout
-                    PostLogoutRedirectUris = { "https://localhost:44364/signin-oidc" },
+                    PostLogoutRedirectUris = { "https://localhost:44364/signout-callback-oidc" },
 
                     RequireConsent = false,
 
