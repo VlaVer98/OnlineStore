@@ -1,28 +1,55 @@
-﻿using System;
+﻿using Shop.Client.Services.Navigation;
+using Shop.Client.Services.Settings;
+using Shop.Client.ViewModels.Base;
+using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Shop.Client
 {
     public partial class App : Application
     {
+        ISettingsService _settingsService;
+
         public App()
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            InitApp();
+            if (Device.RuntimePlatform == Device.UWP)
+            {
+                InitNavigation();
+            }
         }
 
-        protected override void OnStart()
+        private void InitApp()
         {
+            _settingsService = ViewModelLocator.Resolve<ISettingsService>();
+            if (!_settingsService.UseMocks)
+                ViewModelLocator.UpdateDependencies(_settingsService.UseMocks);
+        }
+
+        private Task InitNavigation()
+        {
+            var navigationService = ViewModelLocator.Resolve<INavigationService>();
+            return navigationService.InitializeAsync();
+        }
+
+        protected override async void OnStart()
+        {
+            base.OnStart();
+
+            if (Device.RuntimePlatform != Device.UWP)
+            {
+                await InitNavigation();
+            }
+
+            base.OnResume();
         }
 
         protected override void OnSleep()
         {
+            // Handle when your app sleeps
         }
 
-        protected override void OnResume()
-        {
-        }
     }
 }
