@@ -1,4 +1,5 @@
-﻿using Shop.Client.Services.Dialog;
+﻿using Shop.Client.Services.Catalog;
+using Shop.Client.Services.Dialog;
 using Shop.Client.Services.Identity;
 using Shop.Client.Services.Navigation;
 using Shop.Client.Services.RequestProvider;
@@ -44,6 +45,7 @@ namespace Shop.Client.ViewModels.Base
             _container.Register<ISettingsService, SettingsService>();
             _container.Register<IIdentityService, IdentityService>();
             _container.Register<IRequestProvider, RequestProvider>();
+            _container.Register<ICatalogService, CatalogMockService>();
         }
 
         public static void UpdateDependencies(bool useMockServices)
