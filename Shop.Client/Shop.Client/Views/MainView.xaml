@@ -3,9 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Shop.Client.Views.MainView"
              xmlns:viewModelBase="clr-namespace:Shop.Client.ViewModels.Base;assembly=Shop.Client"
+             xmlns:views="clr-namespace:Shop.Client.Views;assembly=Shop.Client"
              viewModelBase:ViewModelLocator.AutoWireViewModel="true">
-  <!--Pages can be added as references or inline-->
-  <ContentPage Title="Tab 1" />
-  <ContentPage Title="Tab 2" />
-  <ContentPage Title="Tab 3" />
+    
+    <!-- Catalog -->
+    <views:CatalogView  
+        x:Name="CatalogView">
+        <views:CatalogView.Title>
+            Catalog
+        </views:CatalogView.Title>
+    </views:CatalogView>
 </TabbedPage>
