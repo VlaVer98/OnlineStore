@@ -5,18 +5,17 @@
              xmlns:viewModelBase="clr-namespace:Shop.Client.ViewModels.Base;assembly=Shop.Client"
              viewModelBase:ViewModelLocator.AutoWireViewModel="true">
     <ContentPage.Content>
-        <StackLayout  
-                  Grid.Column="2"
-                  Orientation="Horizontal"
-                  HorizontalOptions="Center">
-            <Label
-                        Text="SETTINGS"/>
-            <StackLayout.GestureRecognizers>
-                <TapGestureRecognizer
-                            Command="{Binding GoToMainCommand}"
-                            NumberOfTapsRequired="1" />
-            </StackLayout.GestureRecognizers>
-        </StackLayout>
-        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid 
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="1">
+                <Button Text="Login" WidthRequest="150"/>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
